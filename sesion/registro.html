@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pal' Monte - Registro</title>
+  <link rel="stylesheet" href="registroEstilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="container nav-container">
+      <a href="../main/palmonte.html" class="logo">🚴‍♂️ Pal' Monte</a>
+      <div class="nav-links">
+        <a href="../rutas/rutas.html">Rutas</a>
+        <a href="../comercio/comercio.html">Comercios</a>
+        <a href="../eventos/eventos.html">Eventos</a>
+        <button class="btn" onclick="location.href='iniciarSesion.html'">Iniciar sesión</button>
+        <button class="btn btn-verde" onclick="location.href='registro.html'">Registrarme</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="registro-container">
+      <div class="registro-card">
+        <div class="registro-header">
+          <h1>Crear Cuenta</h1>
+          <p>Únete a la comunidad ciclista de Ibagué</p>
+        </div>
+
+        <form id="formRegistro">
+          <div class="input-group">
+            <label>Nombre completo</label>
+            <input type="text" id="nombre" placeholder="Carlos Rodríguez" required>
+          </div>
+
+          <div class="input-group">
+            <label>Correo electrónico</label>
+            <input type="email" id="email" placeholder="carlos@email.com" required>
+          </div>
+
+          <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="Mínimo 6 caracteres" required>
+          </div>
+
+          <div class="input-group">
+            <label>Confirmar contraseña</label>
+            <input type="password" id="confirmPassword" placeholder="Repite tu contraseña" required>
+          </div>
+
+          <div class="input-group">
+            <label>Teléfono (opcional)</label>
+            <input type="tel" id="telefono" placeholder="3216549870">
+          </div>
+
+          <div class="input-group">
+            <label>Nivel como ciclista</label>
+            <select id="nivel">
+              <option value="principiante">Principiante</option>
+              <option value="intermedio">Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </div>
+
+          <div id="errorMensaje" class="error-mensaje"></div>
+          <div id="successMensaje" class="success-mensaje"></div>
+
+          <button type="submit" class="btn-registro">Registrarme</button>
+        </form>
+
+        <div class="registro-footer">
+          <p>¿Ya tienes cuenta? <a href="iniciarSesion.html">Inicia sesión aquí</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <p>© 2026 Pal' Monte - Conectando ciclistas en Ibagué</p>
+      <p><a href="../rutas/rutas.html">Rutas</a> | <a href="../comercio/comercio.html">Comercios</a> | <a href="../eventos/eventos.html">Eventos</a></p>
+    </div>
+  </div>
+
+  <script src="registro.js"></script>
+</body>
+</html>

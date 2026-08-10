@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pal' Monte - Mi Perfil</title>
+  <link rel="stylesheet" href="perfilEstilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="container nav-container">
+      <a href="../main/palmonte.html" class="logo">🚴‍♂️ Pal' Monte</a>
+      <div class="nav-links" id="navLinks">
+        <!-- El contenido se llena con JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="perfil-container">
+      <!-- Avatar y nombre -->
+      <div class="perfil-header">
+        <div class="avatar" id="avatar">👤</div>
+        <h1 id="nombreUsuario">Cargando...</h1>
+        <p id="emailUsuario">cargando@email.com</p>
+        <span class="nivel-badge" id="nivelUsuario">Cargando</span>
+      </div>
+
+      <!-- Estadísticas -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-numero" id="kmRecorridos">0</div>
+          <div class="stat-label">Km recorridos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-numero" id="rutasCompletadas">0</div>
+          <div class="stat-label">Rutas completadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-numero" id="eventosInscritos">0</div>
+          <div class="stat-label">Eventos inscritos</div>
+        </div>
+      </div>
+
+      <!-- Info personal -->
+      <div class="info-card">
+        <h3>Información personal</h3>
+        <div class="info-row">
+          <span class="info-label">📧 Correo:</span>
+          <span id="infoEmail">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📞 Teléfono:</span>
+          <span id="infoTelefono">No registrado</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">📅 Miembro desde:</span>
+          <span id="infoFecha">-</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">🚴 Nivel:</span>
+          <span id="infoNivel">-</span>
+        </div>
+      </div>
+
+      <!-- Secciones de pestañas -->
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="favoritos">❤️ Rutas favoritas</button>
+          <button class="tab-btn" data-tab="historial">📋 Historial de rutas</button>
+        </div>
+
+        <div id="tabFavoritos" class="tab-content active">
+          <div id="listaFavoritos" class="lista-items">
+            <p class="sin-datos">No tienes rutas favoritas aún</p>
+          </div>
+        </div>
+
+        <div id="tabHistorial" class="tab-content">
+          <div id="listaHistorial" class="lista-items">
+            <p class="sin-datos">No has completado ninguna ruta aún</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón cerrar sesión -->
+      <div class="logout-container">
+        <button id="btnLogout" class="btn-logout">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <p>© 2026 Pal' Monte - Conectando ciclistas en Ibagué</p>
+      <p><a href="../rutas/rutas.html">Rutas</a> | <a href="../comercio/comercio.html">Comercios</a> | <a href="../eventos/eventos.html">Eventos</a></p>
+    </div>
+  </div>
+
+  <script src="perfil.js"></script>
+</body>
+</html>

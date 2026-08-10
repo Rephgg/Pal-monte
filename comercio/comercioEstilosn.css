@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navegación */
+.navbar {
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #006768;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+}
+
+.nav-links a.active {
+  color: #006768;
+  font-weight: bold;
+  border-bottom: 2px solid #006768;
+  padding-bottom: 3px;
+}
+
+.btn {
+  background: #ddd;
+  border: 1px solid #aaa;
+  padding: 6px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-verde {
+  background: #006768;
+  color: white;
+  border-color: #004f51;
+}
+
+/* Header */
+.page-header {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.page-header h1 {
+  color: #006768;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #666;
+}
+
+/* Pestañas */
+.tabs {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.tab.active {
+  color: #006768;
+  font-weight: bold;
+  border-bottom: 2px solid #006768;
+  margin-bottom: -1px;
+}
+
+/* Grid de tarjetas */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin: 30px 0;
+}
+
+/* Tarjeta */
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.badge {
+  background: #e0f0f0;
+  color: #006768;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.rating {
+  float: right;
+  color: #f5a623;
+  font-size: 0.8rem;
+}
+
+.card h3 {
+  margin: 10px 0 8px;
+  color: #006768;
+}
+
+.card p {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.btn-card {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  background: white;
+  border: 1px solid #006768;
+  color: #006768;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 25px 0;
+  margin-top: 40px;
+}
+
+.footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer a.active {
+  color: #006768;
+  font-weight: bold;
+}
+
+.footer p {
+  margin: 8px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .nav-container {
+    flex-direction: column;
+  }
+  
+  .tabs {
+    justify-content: center;
+  }
+}

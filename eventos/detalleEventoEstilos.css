@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar {
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #006768;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+}
+
+.btn {
+  background: #ddd;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-verde {
+  background: #006768;
+  color: white;
+}
+
+.evento-hero {
+  background: linear-gradient(135deg, #006768, #004f51);
+  border-radius: 16px;
+  padding: 30px;
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  color: white;
+}
+
+.evento-fecha-grande {
+  background: rgba(255,255,255,0.2);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.evento-dia {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.evento-mes {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.evento-titulo {
+  flex: 1;
+}
+
+.evento-titulo h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.evento-organizador {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.evento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.evento-info-card, .evento-descripcion-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.evento-info-card h3, .evento-descripcion-card h3 {
+  color: #006768;
+  margin-bottom: 15px;
+}
+
+.evento-info-card p {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.cupos-barra {
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.cupos-progreso {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.cupos-restantes {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn-inscribir-detalle, .btn-cancelar {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-top: 15px;
+}
+
+.btn-inscribir-detalle {
+  background: #006768;
+  color: white;
+}
+
+.btn-inscribir-detalle:hover {
+  background: #004f51;
+}
+
+.btn-cancelar {
+  background: #ba1a1a;
+  color: white;
+}
+
+.btn-cancelar:hover {
+  background: #8b0000;
+}
+
+.evento-login-required {
+  text-align: center;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.evento-login-required a {
+  color: #006768;
+  font-weight: bold;
+}
+
+.evento-cancelado-mensaje, .evento-completo, .evento-ya-inscrito {
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.evento-cancelado-mensaje {
+  background: #f5f5f5;
+  color: #ba1a1a;
+}
+
+.evento-completo {
+  background: #ffe0e0;
+  color: #ba1a1a;
+}
+
+.evento-ya-inscrito {
+  background: #d4f0f0;
+  color: #006768;
+}
+
+.evento-asistentes {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.evento-asistentes h3 {
+  color: #006768;
+  margin-bottom: 20px;
+}
+
+#listaAsistentes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.asistente-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f5f5f5;
+  padding: 8px 15px;
+  border-radius: 40px;
+}
+
+.asistente-nombre {
+  font-size: 14px;
+  color: #333;
+}
+
+.sin-asistentes {
+  color: #999;
+  text-align: center;
+  padding: 20px;
+}
+
+.volver-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.btn-volver {
+  background: transparent;
+  border: 2px solid #006768;
+  color: #006768;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-volver:hover {
+  background: #006768;
+  color: white;
+}
+
+.footer {
+  background: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 25px 0;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .evento-grid {
+    grid-template-columns: 1fr;
+  }
+  .evento-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .nav-container {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navegación */
+.navbar {
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #006768;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+}
+
+.nav-links a.active {
+  color: #006768;
+  font-weight: bold;
+  border-bottom: 2px solid #006768;
+  padding-bottom: 3px;
+}
+
+.btn {
+  background: #ddd;
+  border: 1px solid #aaa;
+  padding: 6px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-verde {
+  background: #006768;
+  color: white;
+  border-color: #004f51;
+}
+
+/* Header */
+.page-header {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.page-header h1 {
+  color: #006768;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  color: #666;
+}
+
+/* Eventos */
+.event-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.event-date {
+  background: #006768;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.event-month {
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.event-day {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.event-info {
+  flex: 2;
+}
+
+.event-info h3 {
+  margin: 8px 0 5px;
+}
+
+.event-info p {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.badge.verde { background: #d4f0f0; color: #006768; }
+.badge.rojo { background: #ffe0e0; color: #c0392b; }
+.badge.azul { background: #e0e0ff; color: #2c3e99; }
+.badge.gris { background: #e0e0e0; color: #666; }
+
+.event-action {
+  text-align: center;
+  min-width: 130px;
+}
+
+.spots {
+  font-size: 0.8rem;
+  color: #006768;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.btn-inscribir {
+  background: #006768;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-inscribir.disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Cancelado */
+.cancelado {
+  background: #f5f5f5;
+}
+
+.cancel-tag {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  background: #ba1a1a;
+  color: white;
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.event-date.gris {
+  background: #999;
+}
+
+.tachado {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* Footer */
+.footer {
+  background: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 25px 0;
+  margin-top: 40px;
+}
+
+.footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer a.active {
+  color: #006768;
+  font-weight: bold;
+}
+
+.footer p {
+  margin: 8px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .event-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+  }
+}
+.btn-detalle {
+    background: transparent;
+    border: 2px solid #006768;
+    color: #006768;
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.btn-detalle:hover {
+    background: #006768;
+    color: white;
+}
+
+.event-action {
+    text-align: center;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

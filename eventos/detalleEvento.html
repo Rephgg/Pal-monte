@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pal' Monte - Detalle de Evento</title>
+  <link rel="stylesheet" href="detalleEventoEstilos.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="container nav-container">
+      <a href="../main/palmonte.html" class="logo">🚴‍♂️ Pal' Monte</a>
+      <div class="nav-links" id="navLinks"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="evento-hero">
+      <div class="evento-fecha-grande">
+        <div class="evento-dia" id="eventoDia">--</div>
+        <div class="evento-mes" id="eventoMes">---</div>
+      </div>
+      <div class="evento-titulo">
+        <h1 id="eventoNombre">Cargando...</h1>
+        <div class="evento-organizador" id="eventoOrganizador"></div>
+      </div>
+    </div>
+
+    <div class="evento-grid">
+      <div class="evento-info-card">
+        <h3>📅 Fecha y hora</h3>
+        <p id="eventoFechaCompleta">Cargando...</p>
+        <h3>📍 Lugar</h3>
+        <p id="eventoLugar">Cargando...</p>
+        <h3>👥 Cupos</h3>
+        <p id="eventoCupos">Cargando...</p>
+        <div class="cupos-barra">
+          <div class="cupos-progreso" id="cuposProgreso" style="width: 0%"></div>
+        </div>
+        <p class="cupos-restantes" id="eventoCuposRestantes"></p>
+      </div>
+      <div class="evento-descripcion-card">
+        <h3>📝 Descripción</h3>
+        <p id="eventoDescripcion">Cargando...</p>
+        <div id="eventoAcciones"></div>
+      </div>
+    </div>
+
+    <div class="evento-asistentes">
+      <h3>👥 Asistentes confirmados</h3>
+      <div id="listaAsistentes"></div>
+    </div>
+
+    <div class="volver-container">
+      <button class="btn-volver" onclick="window.location.href='eventos.html'">← Volver a eventos</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <p>© 2026 Pal' Monte - Conectando ciclistas en Ibagué</p>
+    </div>
+  </div>
+
+  <script src="detalleEvento.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pal' Monte - Detalle de Ruta</title>
+  <link rel="stylesheet" href="detalleRutaEstilos.css">
+</head>
+<body>
+
+  <!-- Navegación -->
+  <div class="navbar">
+    <div class="container nav-container">
+      <a href="../main/palmonte.html" class="logo">🚴‍♂️ Pal' Monte</a>
+      <div class="nav-links" id="navLinks">
+        <!-- El contenido se llena con JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Imagen principal -->
+  <div class="hero" id="hero">
+    <div class="hero-text">
+      <h1 id="rutaNombre">Cargando...</h1>
+      <p id="rutaDescripcion"></p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="container stats-grid" id="statsGrid">
+      <!-- Los stats se llenan con JS -->
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="section">
+    <div class="container">
+      <h2>Sobre la Ruta</h2>
+      <p id="rutaDescripcionCompleta">Cargando...</p>
+
+      <h2>Mapa</h2>
+      <div class="mapa">
+        <img id="mapaImg" src="" alt="Mapa de la ruta">
+        <p class="coord" id="coordenadas">Cargando...</p>
+      </div>
+
+      <h2>Reseñas</h2>
+      <div id="reseñasContainer">
+        <!-- Las reseñas se llenan con JS -->
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="acciones" id="acciones">
+        <!-- Los botones se llenan con JS según sesión -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para escribir reseña -->
+<div id="modalResena" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>✏️ Escribir reseña</h3>
+            <span id="cerrarModal" class="cerrar">&times;</span>
+        </div>
+        <div class="modal-body">
+            <label>Calificación:</label>
+            <select id="resenaCalificacion" class="modal-select">
+                <option value="5">⭐⭐⭐⭐⭐ - Excelente</option>
+                <option value="4">⭐⭐⭐⭐ - Muy buena</option>
+                <option value="3">⭐⭐⭐ - Buena</option>
+                <option value="2">⭐⭐ - Regular</option>
+                <option value="1">⭐ - Mala</option>
+            </select>
+            
+            <label>Comentario:</label>
+            <textarea id="resenaComentario" class="modal-textarea" rows="4" placeholder="Cuéntanos tu experiencia..."></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancelar-modal" id="btnCancelarModal">Cancelar</button>
+            <button class="btn-enviar-modal" id="enviarResena">Publicar reseña</button>
+        </div>
+    </div>
+</div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="container">
+      <p>© 2026 Pal' Monte - Conectando ciclistas en Ibagué</p>
+      <p><a href="../rutas/rutas.html">Rutas</a> | <a href="../comercio/comercio.html">Comercios</a> | <a href="../eventos/eventos.html">Eventos</a></p>
+    </div>
+  </div>
+
+  <script src="detalleRuta.js"></script>
+</body>
+</html>
