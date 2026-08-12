@@ -14,7 +14,8 @@ Evidencias SENA ADSO: `GA8-220501096-AA1-EV01` (web), `AA2-EV02` (APK) y
 | Artifact | Ruta local | Repo Git |
 |---|---|---|
 | Proyecto web (backend + frontend + BD) | `D:\U\ProgWeb\PalMonte` | `https://github.com/Rephgg/Pal-monte.git` (rama `main`) |
-| Proyecto móvil Android (Compose) | `D:\Android\AppPedalea` | (sin repo todavía; se versiona aparte) |
+| Proyecto móvil Android (Compose) | `D:\Android\AppPedalea` | (código fuente local) |
+| Ejecutable APK (EV02) | `D:\U\ProgWeb\PalMonte\apk\PalMonte_AppPedalea.apk` | En repo: `apk/PalMonte_AppPedalea.apk` |
 | Entrega comprimida (web) | `D:\U\ProgWeb\PalMonte_Entrega.zip` | — |
 
 ---
