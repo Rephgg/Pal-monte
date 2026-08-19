@@ -973,6 +973,8 @@ async def add_resena(request: Request):
         
         return {"message": "Reseña guardada exitosamente"}
         
+    except HTTPException:
+        raise
     except Exception as e:
         print("Error:", e)
         raise HTTPException(status_code=500, detail=str(e))
