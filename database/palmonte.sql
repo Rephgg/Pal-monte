@@ -108,7 +108,8 @@ CREATE TABLE `evento` (
   PRIMARY KEY (`id`),
   KEY `idx_evento_fecha` (`fecha`),
   KEY `fk_evento_organizador` (`id_organizador`),
-  CONSTRAINT `fk_evento_organizador` FOREIGN KEY (`id_organizador`) REFERENCES `usuario` (`id`) ON DELETE SET NULL
+  CONSTRAINT `fk_evento_organizador` FOREIGN KEY (`id_organizador`) REFERENCES `usuario` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `chk_evento_cupo` CHECK ((`cupo_actual` >= 0) and (`cupo_actual` <= `cupo_max`))
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -193,16 +194,18 @@ CREATE TABLE `resena` (
   `comentario` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `calificacion` tinyint NOT NULL,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+PRIMARY KEY (`id`),
   KEY `idx_resena_fecha` (`fecha`),
   KEY `fk_resena_usuario` (`id_usuario`),
   KEY `fk_resena_ruta` (`id_ruta`),
   KEY `fk_resena_comercio` (`id_comercio`),
+  UNIQUE KEY `uq_resena_usuario_ruta` (`id_usuario`,`id_ruta`),
+  UNIQUE KEY `uq_resena_usuario_comercio` (`id_usuario`,`id_comercio`),
   CONSTRAINT `fk_resena_comercio` FOREIGN KEY (`id_comercio`) REFERENCES `comercio` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_resena_ruta` FOREIGN KEY (`id_ruta`) REFERENCES `ruta` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_resena_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
   CONSTRAINT `chk_resena_calificacion` CHECK ((`calificacion` between 1 and 5)),
-  CONSTRAINT `chk_resena_tipo` CHECK ((((`id_ruta` is not null) and (`id_comercio` is null)) or ((`id_ruta` is null) and (`id_comercio` is not null))))
+  CONSTRAINT `chk_resena_tipo` CHECK ((((`id_ruta` is not null) and (`id_comercio` is null)) or ((`id_ruta` is null) and (`id_comercio` is not null)))
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -310,7 +313,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Carlos Rodríguez','carlos@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1990-05-15','3216549870','2026-08-10 14:37:48',1),(2,'Mariana L├│pez','mariana@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1992-08-20','3104567890','2026-08-10 14:37:48',1),(3,'Andrés Ramírez','andres@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1988-03-10','3157891234','2026-08-10 14:37:48',1),(4,'Laura Méndez','laura@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1995-11-25','3187654321','2026-08-10 14:37:48',1),(5,'Pedro Sánchez','pedro@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1985-07-12','3123456789','2026-08-10 14:37:48',1),(9,'777pro','juan77@gmail.com','$2b$12$an1tr83aTTxGsuXWmvtxn.JcBkzJ6FYwUicd7MWmVeCJQx8Vaxg2u',NULL,'123123','2026-08-10 15:17:19',1);
+INSERT INTO `usuario` VALUES (1,'Carlos Rodríguez','carlos@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1990-05-15','3216549870','2026-08-10 14:37:48',1),(2,'Mariana López','mariana@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1992-08-20','3104567890','2026-08-10 14:37:48',1),(3,'Andrés Ramírez','andres@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1988-03-10','3157891234','2026-08-10 14:37:48',1),(4,'Laura Méndez','laura@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1995-11-25','3187654321','2026-08-10 14:37:48',1),(5,'Pedro Sánchez','pedro@email.com','$2b$12$VtBkqe75g7dPFHPJb7cVT.MN3uN9bcl/Sw6jFvA9wL7s.ErFfaMXO','1985-07-12','3123456789','2026-08-10 14:37:48',1),(9,'777pro','juan77@gmail.com','$2b$12$an1tr83aTTxGsuXWmvtxn.JcBkzJ6FYwUicd7MWmVeCJQx8Vaxg2u',NULL,'123123','2026-08-10 15:17:19',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

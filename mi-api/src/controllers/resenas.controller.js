@@ -9,6 +9,11 @@
  */
 const pool = require('../db');
 
+const syncComercioCalificacion = async (id_comercio) => {
+  const [prom] = await pool.query('SELECT AVG(calificacion) as promedio FROM resena WHERE id_comercio = ?', [id_comercio]);
+  await pool.query('UPDATE comercio SET calificacion = ? WHERE id = ?', [prom[0].promedio || 0, id_comercio]);
+};
+
 // POST /api/resenas
 const create = async (req, res) => {
   try {
@@ -30,6 +35,8 @@ const create = async (req, res) => {
 
       await pool.query('INSERT INTO resena (id_usuario, id_comercio, calificacion, comentario) VALUES (?, ?, ?, ?)',
         [id_usuario, id_comercio, calificacion, comentario]);
+
+      await syncComercioCalificacion(id_comercio);
     } else {
       return res.status(400).json({ ok: false, msg: 'Debes especificar una ruta o un comercio' });
     }
@@ -49,12 +56,15 @@ const update = async (req, res) => {
     if (!calificacion) return res.status(400).json({ ok: false, msg: 'calificacion es requerida' });
     if (!comentario) return res.status(400).json({ ok: false, msg: 'comentario es requerido' });
 
-    const [result] = await pool.query(
+    const [resena] = await pool.query('SELECT id_comercio FROM resena WHERE id = ?', [resena_id]);
+    if (resena.length === 0) return res.status(404).json({ ok: false, msg: 'Reseña no encontrada' });
+
+    await pool.query(
       'UPDATE resena SET calificacion = ?, comentario = ? WHERE id = ?',
       [calificacion, comentario, resena_id]
     );
 
-    if (result.affectedRows === 0) return res.status(404).json({ ok: false, msg: 'Reseña no encontrada' });
+    if (resena[0].id_comercio) await syncComercioCalificacion(resena[0].id_comercio);
 
     res.json({ ok: true, msg: 'Reseña actualizada exitosamente' });
   } catch (err) {
@@ -66,9 +76,12 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { resena_id } = req.params;
-    const [result] = await pool.query('DELETE FROM resena WHERE id = ?', [resena_id]);
+    const [resena] = await pool.query('SELECT id_comercio FROM resena WHERE id = ?', [resena_id]);
+    if (resena.length === 0) return res.status(404).json({ ok: false, msg: 'Reseña no encontrada' });
 
-    if (result.affectedRows === 0) return res.status(404).json({ ok: false, msg: 'Reseña no encontrada' });
+    await pool.query('DELETE FROM resena WHERE id = ?', [resena_id]);
+
+    if (resena[0].id_comercio) await syncComercioCalificacion(resena[0].id_comercio);
 
     res.json({ ok: true, msg: 'Reseña eliminada exitosamente' });
   } catch (err) {
