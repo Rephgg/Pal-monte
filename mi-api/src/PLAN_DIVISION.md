@@ -117,3 +117,37 @@ git push origin <rama>
 `src/app.js` registra los 7 routers. Si un miembro crea un archivo con otro nombre,
 debe actualizar la línea correspondiente en `app.js`, pero lo ideal es mantener los nombres
 de arriba para que cada quien solo suba sus archivos sin tocar los de los demás.
+
+---
+
+## AMPLIACIÓN DE LA BASE DE DATOS (del 9 al 24 tablas)
+
+Se amplió `database/palmonte.sql` con **15 tablas nuevas** para cubrir funciones
+que el modelo original no tenía. Están agrupadas en módulos con su controlador/ruta:
+
+| Módulo | Tablas nuevas | Archivos |
+|--------|---------------|----------|
+| Sesiones y autenticación | `sesion` | `controllers/sesiones.controller.js` + `routes/sesiones.routes.js` + `models/sesiones.model.js` |
+| Bicicletas | `bicicleta` | `controllers/bicicletas.controller.js` + `routes/bicicletas.routes.js` + `models/bicicletas.model.js` |
+| Geometría de rutas | `punto_ruta`, `parada_ruta` | `controllers/rutasGeometria.controller.js` + `routes/rutasGeometria.routes.js` + `models/rutasGeometria.model.js` |
+| Comunidad | `seguidor`, `publicacion`, `comentario`, `me_gusta` | `controllers/social.controller.js` + `routes/social.routes.js` + `models/social.model.js` |
+| Notificaciones | `notificacion` | `controllers/notificaciones.controller.js` + `routes/notificaciones.routes.js` + `models/notificaciones.model.js` |
+| Gamificación | `logro`, `logro_usuario` | `controllers/logros.controller.js` + `routes/logros.routes.js` + `models/logros.model.js` |
+| Patrocinadores | `patrocinador`, `patrocinador_evento` | `controllers/patrocinadores.controller.js` + `routes/patrocinadores.routes.js` + `models/patrocinadores.model.js` |
+| Moderación | `reporte` | `controllers/reportes.controller.js` + `routes/reportes.routes.js` + `models/reportes.model.js` |
+| Horarios | `horario_comercio` | `controllers/horariosComercio.controller.js` + `routes/horariosComercio.routes.js` + `models/horariosComercio.model.js` |
+
+**Endpoints destacados (18 nuevos):**
+
+- `POST /api/login` ahora crea una sesión y devuelve `token` (tabla `sesion`)
+- `GET/POST/DELETE /api/bicicletas...`
+- `GET/POST /api/rutas/:id/puntos`, `GET/POST /api/rutas/:id/paradas`
+- `POST /api/seguidores`, `GET/POST/DELETE /api/publicaciones`, `POST /api/comentarios`, `POST /api/publicaciones/:id/me-gusta`
+- `GET/POST /api/notificaciones...`
+- `GET/POST /api/logros`, `GET/POST /api/logros-usuario`
+- `GET/POST /api/patrocinadores`, `GET/POST/DELETE /api/eventos/:id/patrocinadores`
+- `GET/POST /api/reportes`
+- `GET/POST /api/comercios/:id/horarios`
+
+Los nuevos módulos usan una capa de modelos (`src/models/*.model.js`) para separar
+la lógica de la base de datos del controlador.

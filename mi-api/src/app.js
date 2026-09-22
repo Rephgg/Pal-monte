@@ -31,4 +31,30 @@ app.use('/api', resenasRouter);
 const realizadasRouter = require('./routes/rutasRealizadas.routes');
 app.use('/api', realizadasRouter);
 
+// =====================================================
+// MÓDULOS NUEVOS (ampliación de la base de datos)
+// Sesiones y autenticación, bicicletas, geometría de
+// rutas, comunidad, notificaciones, logros,
+// patrocinadores, moderación y horarios comerciales.
+// =====================================================
+
+const sesionesRouter = require('./routes/sesiones.routes');
+app.use('/api', sesionesRouter);
+const bicicletasRouter = require('./routes/bicicletas.routes');
+app.use('/api', bicicletasRouter);
+const geometriaRouter = require('./routes/rutasGeometria.routes');
+app.use('/api', geometriaRouter);
+const socialRouter = require('./routes/social.routes');
+app.use('/api', socialRouter);
+const notificacionesRouter = require('./routes/notificaciones.routes');
+app.use('/api', notificacionesRouter);
+const logrosRouter = require('./routes/logros.routes');
+app.use('/api', logrosRouter);
+const patrocinadoresRouter = require('./routes/patrocinadores.routes');
+app.use('/api', patrocinadoresRouter);
+const reportesRouter = require('./routes/reportes.routes');
+app.use('/api', reportesRouter);
+const horariosComercioRouter = require('./routes/horariosComercio.routes');
+app.use('/api', horariosComercioRouter);
+
 module.exports = app;

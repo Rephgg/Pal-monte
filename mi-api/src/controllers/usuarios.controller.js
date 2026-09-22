@@ -14,6 +14,7 @@
  * ==============================================
  */
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const pool = require('../db');
 
 // POST /api/registro
@@ -66,7 +67,16 @@ const login = async (req, res) => {
     }
 
     const u = rows[0];
-    res.json({ ok: true, data: { id: u.id, nombre: u.nombre, email: u.email, nivel: u.nivel, rol: u.rol } });
+
+    // Crear sesión (token) para el login
+    const token = crypto.randomBytes(32).toString('hex');
+    const expira = new Date(Date.now() + 8 * 3600 * 1000);
+    await pool.query(
+      'INSERT INTO sesion (id_usuario, token, expira) VALUES (?, ?, ?)',
+      [u.id, token, expira]
+    );
+
+    res.json({ ok: true, data: { id: u.id, nombre: u.nombre, email: u.email, nivel: u.nivel, rol: u.rol, token } });
   } catch (err) {
     res.status(500).json({ ok: false, msg: 'Error de conexión', error: err.message });
   }

@@ -324,3 +324,329 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2026-08-10 15:21:12
+
+-- =====================================================
+-- TABLAS NUEVAS (ampliación del esquema)
+-- Módulos: sesiones, bicicletas, geometría de rutas,
+-- comunidad, notificaciones, logros, patrocinadores,
+-- moderación y horarios de comercio.
+-- =====================================================
+
+SET FOREIGN_KEY_CHECKS=0;
+
+--
+-- Table structure for table `sesion`
+--
+
+DROP TABLE IF EXISTS `sesion`;
+CREATE TABLE `sesion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expira` datetime NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_sesion_token` (`token`),
+  KEY `idx_sesion_usuario` (`id_usuario`),
+  CONSTRAINT `fk_sesion_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `sesion` WRITE;
+INSERT INTO `sesion` VALUES (1,1,'a1b2c3d4e5f60718293a4b5c6d7e8f90','2026-08-10 15:30:00','2026-08-10 23:30:00',1),(2,3,'9f8e7d6c5b4a39281706f5e4d3c2b1a0','2026-08-10 15:31:00','2026-08-10 23:31:00',1);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bicicleta`
+--
+
+DROP TABLE IF EXISTS `bicicleta`;
+CREATE TABLE `bicicleta` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `marca` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_bici` enum('montaña','carrera','hibrida','urbana','electrica') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rodada` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'default_bike.png',
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_bicicleta_usuario` (`id_usuario`),
+  CONSTRAINT `fk_bicicleta_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `bicicleta` WRITE;
+INSERT INTO `bicicleta` VALUES (1,1,'Giant','ATX 27.5','montaña','27.5','Negro','default_bike.png','2026-08-10 15:40:00'),(2,1,'Specialized','Allez','carrera','28','Rojo','default_bike.png','2026-08-10 15:41:00'),(3,2,'Trek','Marlin 6','montaña','29','Azul','default_bike.png','2026-08-10 15:42:00'),(4,3,'Scott','Scale 970','montaña','29','Verde','default_bike.png','2026-08-10 15:43:00'),(5,5,'Pinarello','F10','carrera','28','Blanco','default_bike.png','2026-08-10 15:44:00');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `punto_ruta`
+--
+
+DROP TABLE IF EXISTS `punto_ruta`;
+CREATE TABLE `punto_ruta` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ruta` int NOT NULL,
+  `orden` int NOT NULL,
+  `lat` decimal(10,7) NOT NULL,
+  `lng` decimal(10,7) NOT NULL,
+  `altitud` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_punto_ruta` (`id_ruta`,`orden`),
+  CONSTRAINT `fk_punto_ruta_ruta` FOREIGN KEY (`id_ruta`) REFERENCES `ruta` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `punto_ruta` WRITE;
+INSERT INTO `punto_ruta` VALUES (1,1,1,4.4389000,-75.2323000,700),(2,1,2,4.4451200,-75.2254000,760),(3,1,3,4.4523000,-75.2198000,830),(4,1,4,4.4600000,-75.2100000,1150),(5,2,1,4.4500000,-75.2400000,590),(6,2,2,4.4522000,-75.2361000,610),(7,3,1,4.4600000,-75.2100000,1150),(8,3,2,4.4654000,-75.2027000,1300);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parada_ruta`
+--
+
+DROP TABLE IF EXISTS `parada_ruta`;
+CREATE TABLE `parada_ruta` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_ruta` int NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` enum('agua','mirador','taller','tienda','descanso','restaurante') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'descanso',
+  `lat` decimal(10,7) DEFAULT NULL,
+  `lng` decimal(10,7) DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `idx_parada_ruta` (`id_ruta`),
+  CONSTRAINT `fk_parada_ruta_ruta` FOREIGN KEY (`id_ruta`) REFERENCES `ruta` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `parada_ruta` WRITE;
+INSERT INTO `parada_ruta` VALUES (1,1,'Mirador del cañón','mirador',4.4523000,-75.2198000,'Vista panorámica del cañón del Combeima'),(2,1,'Punto de agua Juntas','agua',4.4523000,-75.2198000,'Toma de agua potable para llenar botellas'),(3,2,'Bosque del centro','descanso',4.4522000,-75.2361000,'Zona verde ideal para un descanso'),(4,3,'Taller la Montaña','taller',4.4654000,-75.2027000,'Taller de emergencia a mitad de subida');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seguidor`
+--
+
+DROP TABLE IF EXISTS `seguidor`;
+CREATE TABLE `seguidor` (
+  `id_seguidor` int NOT NULL,
+  `id_seguido` int NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_seguidor`,`id_seguido`),
+  KEY `idx_seguidor_seguido` (`id_seguido`),
+  CONSTRAINT `fk_seguidor_usuario` FOREIGN KEY (`id_seguidor`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_seguido_usuario` FOREIGN KEY (`id_seguido`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `chk_seguidor_distinto` CHECK ((`id_seguidor` <> `id_seguido`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `seguidor` WRITE;
+INSERT INTO `seguidor` VALUES (2,1,'2026-08-10 15:50:00'),(3,1,'2026-08-10 15:51:00'),(4,2,'2026-08-10 15:52:00'),(1,3,'2026-08-10 15:53:00'),(5,3,'2026-08-10 15:54:00');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `publicacion`
+--
+
+DROP TABLE IF EXISTS `publicacion`;
+CREATE TABLE `publicacion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `texto` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'default_post.png',
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `activo` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `idx_publicacion_usuario` (`id_usuario`),
+  KEY `idx_publicacion_fecha` (`fecha`),
+  CONSTRAINT `fk_publicacion_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `publicacion` WRITE;
+INSERT INTO `publicacion` VALUES (1,1,'Excelente rodada por el Combeima esta mañana, 25 km a buen ritmo!','default_post.png','2026-08-09 10:00:00',1),(2,3,'Preparando la carrera de montaña del próximo mes, quien se apunta?','default_post.png','2026-08-09 11:00:00',1),(3,5,'Record de kilometraje este mes, 320 km recorridos. A seguir pedaleando!','default_post.png','2026-08-08 18:30:00',1);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comentario`
+--
+
+DROP TABLE IF EXISTS `comentario`;
+CREATE TABLE `comentario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_publicacion` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `texto` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_comentario_publicacion` (`id_publicacion`),
+  KEY `fk_comentario_usuario` (`id_usuario`),
+  CONSTRAINT `fk_comentario_publicacion` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_comentario_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `comentario` WRITE;
+INSERT INTO `comentario` VALUES (1,1,3,'Te acompaño la próxima, me encanta esa ruta!'),(2,1,2,'Excelente trabajo, sigue así!'),(3,2,1,'Yo quiero, vamos que se puede!');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `me_gusta`
+--
+
+DROP TABLE IF EXISTS `me_gusta`;
+CREATE TABLE `me_gusta` (
+  `id_publicacion` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_publicacion`,`id_usuario`),
+  KEY `fk_megusta_usuario` (`id_usuario`),
+  CONSTRAINT `fk_megusta_publicacion` FOREIGN KEY (`id_publicacion`) REFERENCES `publicacion` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_megusta_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `me_gusta` WRITE;
+INSERT INTO `me_gusta` VALUES (1,1,'2026-08-09 10:05:00'),(1,2,'2026-08-09 10:15:00'),(1,3,'2026-08-09 10:20:00'),(2,1,'2026-08-09 11:10:00'),(3,3,'2026-08-08 18:40:00');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `notificacion`
+--
+
+DROP TABLE IF EXISTS `notificacion`;
+CREATE TABLE `notificacion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `tipo` enum('seguidor','me_gusta','comentario','evento','sistema','logro') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `texto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_referencia` int DEFAULT NULL,
+  `leida` tinyint(1) NOT NULL DEFAULT '0',
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_notificacion_usuario` (`id_usuario`,`leida`),
+  CONSTRAINT `fk_notificacion_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `notificacion` WRITE;
+INSERT INTO `notificacion` VALUES (1,1,'seguidor','Mariana López ahora te sigue',2,'2026-08-10 15:51:00',0),(2,1,'me_gusta','Andrés Ramírez dio me gusta a tu publicación',1,'2026-08-09 10:20:00',0),(3,3,'comentario','Nuevo comentario en tu publicación: Yo quiero, vamos que se puede!',1,'2026-08-09 11:20:00',0),(4,1,'evento','Te inscribiste en la Rodada dominical',1,'2026-08-10 15:00:00',1);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `logro`
+--
+
+DROP TABLE IF EXISTS `logro`;
+CREATE TABLE `logro` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `tipo_criterio` enum('km','rutas','eventos','social','distancia_max') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'km',
+  `valor_requerido` int NOT NULL DEFAULT '0',
+  `icono` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT 'default_challenge.png',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_logro_nombre` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `logro` WRITE;
+INSERT INTO `logro` VALUES (1,'Primer Pedalazo','Completa tu primera ruta','rutas',1,'default_challenge.png'),(2,'Centenar','Acumula 100 km recorridos','km',100,'default_challenge.png'),(3,'Rutas Diversas','Completa 5 rutas diferentes','rutas',5,'default_challenge.png'),(4,'Rey del Combeima','Completa una ruta de al menos 12 km','distancia_max',12,'default_challenge.png'),(5,'Social Ciclista','Consigue 10 seguidores','social',10,'default_challenge.png'),(6,'Eventero','Participa en un evento','eventos',1,'default_challenge.png');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `logro_usuario`
+--
+
+DROP TABLE IF EXISTS `logro_usuario`;
+CREATE TABLE `logro_usuario` (
+  `id_usuario` int NOT NULL,
+  `id_logro` int NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_usuario`,`id_logro`),
+  KEY `fk_logrousuario_logro` (`id_logro`),
+  CONSTRAINT `fk_logrousuario_logro` FOREIGN KEY (`id_logro`) REFERENCES `logro` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_logrousuario_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `logro_usuario` WRITE;
+INSERT INTO `logro_usuario` VALUES (1,1,'2026-08-10 16:00:00'),(1,2,'2026-08-10 16:01:00'),(3,4,'2026-08-10 16:02:00');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patrocinador`
+--
+
+DROP TABLE IF EXISTS `patrocinador`;
+CREATE TABLE `patrocinador` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'default_sponsor.png',
+  `web` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `patrocinador` WRITE;
+INSERT INTO `patrocinador` VALUES (1,'Shimano','Multinacional de componentes para bicicletas','default_sponsor.png','https://www.shimano.com'),(2,'Hidratación Andina','Bebidas hidratantes para deportistas','default_sponsor.png','https://www.hidratacionandina.co'),(3,'BiciMarket','Tienda de bicicletas y accesorios local','default_sponsor.png','https://www.bicimarket.co');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patrocinador_evento`
+--
+
+DROP TABLE IF EXISTS `patrocinador_evento`;
+CREATE TABLE `patrocinador_evento` (
+  `id_evento` int NOT NULL,
+  `id_patrocinador` int NOT NULL,
+  `aporte` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id_evento`,`id_patrocinador`),
+  KEY `fk_patroevento_patrocinador` (`id_patrocinador`),
+  CONSTRAINT `fk_patroevento_evento` FOREIGN KEY (`id_evento`) REFERENCES `evento` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_patroevento_patrocinador` FOREIGN KEY (`id_patrocinador`) REFERENCES `patrocinador` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `patrocinador_evento` WRITE;
+INSERT INTO `patrocinador_evento` VALUES (1,2,'Hidratación para todos los participantes'),(2,1,'Premios en componentes'),(3,3,'Logística y avituallamiento');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporte`
+--
+
+DROP TABLE IF EXISTS `reporte`;
+CREATE TABLE `reporte` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario_reporta` int NOT NULL,
+  `tipo` enum('usuario','publicacion','comentario','resena','ruta') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_referencia` int NOT NULL,
+  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `estado` enum('pendiente','revisado','descartado','sancionado') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pendiente',
+  PRIMARY KEY (`id`),
+  KEY `idx_reporte_estado` (`estado`),
+  KEY `fk_reporte_usuario` (`id_usuario_reporta`),
+  CONSTRAINT `fk_reporte_usuario` FOREIGN KEY (`id_usuario_reporta`) REFERENCES `usuario` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `reporte` WRITE;
+INSERT INTO `reporte` VALUES (1,2,'publicacion',3,'Contenido publicitario reiterado','2026-08-10 16:10:00','pendiente'),(2,4,'comentario',1,'Lenguaje inapropiado','2026-08-10 16:11:00','revisado');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `horario_comercio`
+--
+
+DROP TABLE IF EXISTS `horario_comercio`;
+CREATE TABLE `horario_comercio` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_comercio` int NOT NULL,
+  `dia_semana` tinyint NOT NULL,
+  `hora_apertura` time DEFAULT NULL,
+  `hora_cierre` time DEFAULT NULL,
+  `cerrado` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_horario_comercio_dia` (`id_comercio`,`dia_semana`),
+  CONSTRAINT `fk_horario_comercio` FOREIGN KEY (`id_comercio`) REFERENCES `comercio` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `chk_horario_dia` CHECK ((`dia_semana` between 1 and 7))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `horario_comercio` WRITE;
+INSERT INTO `horario_comercio` VALUES (1,1,1,'08:00:00','18:00:00',0),(2,1,2,'08:00:00','18:00:00',0),(3,1,3,'08:00:00','18:00:00',0),(4,1,4,'08:00:00','18:00:00',0),(5,1,5,'08:00:00','18:00:00',0),(6,1,6,'08:00:00','18:00:00',0),(7,1,7,NULL,NULL,1),(8,2,1,'07:00:00','20:00:00',0),(9,2,2,'07:00:00','20:00:00',0),(10,2,3,'07:00:00','20:00:00',0),(11,2,4,'07:00:00','20:00:00',0),(12,2,5,'07:00:00','20:00:00',0),(13,2,6,'07:00:00','20:00:00',0),(14,2,7,'07:00:00','20:00:00',0);
+UNLOCK TABLES;
+
+SET FOREIGN_KEY_CHECKS=1;
