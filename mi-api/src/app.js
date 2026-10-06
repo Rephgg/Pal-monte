@@ -1,8 +1,25 @@
+require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+
 const app = express();
 
-// Middleware para parsear JSON
-app.use(express.json());
+// ─── Middlewares globales (terceros) ───
+app.use(cors());                // Habilita CORS
+app.use(morgan('dev'));         // Logging de requests
+app.use(express.json());        // Parsear body JSON
+
+// ─── Middleware personalizado global ───
+app.use((req, res, next) => {
+  const ts = new Date().toISOString();
+  console.log(`[${ts}] ${req.method} ${req.url}`);
+  next(); // Pasar al siguiente middleware
+});
+
+// ─── Rutas de autenticación ───
+const authRouter = require('./routes/auth.routes');
+app.use('/api/auth', authRouter);
 
 // =====================================================
 // CABLEADO DE RUTAS
@@ -53,8 +70,14 @@ app.use('/api', logrosRouter);
 const patrocinadoresRouter = require('./routes/patrocinadores.routes');
 app.use('/api', patrocinadoresRouter);
 const reportesRouter = require('./routes/reportes.routes');
-app.use('/api', reportesRouter);
+app.use('/api', reportosRouter);
 const horariosComercioRouter = require('./routes/horariosComercio.routes');
 app.use('/api', horariosComercioRouter);
+
+// ─── Middleware de errores global (al final) ───
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ ok: false, error: 'Error interno del servidor' });
+});
 
 module.exports = app;
