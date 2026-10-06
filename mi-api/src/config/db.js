@@ -19,8 +19,8 @@ pool.getConnection()
     conn.release(); // devolver al pool
   })
   .catch(err => {
-    console.error('Error MySQL:', err.message);
-    process.exit(1); // detener app si no hay DB
+    console.warn('AVISO MySQL no disponible:', err.message);
+    console.warn('El servidor arranca igual; la BD se reconectara cuando este disponible.');
   });
 
 module.exports = pool;
