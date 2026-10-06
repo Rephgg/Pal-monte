@@ -2,7 +2,7 @@
  * Model RUTA (tabla `ruta`)
  * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 // ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, nombre, descripcion, distancia_km, dificultad, tipo_bici,

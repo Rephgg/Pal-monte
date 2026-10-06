@@ -2,7 +2,7 @@
  * Model COMERCIOS (tabla `comercio`)
  * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 // ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, nombre, tipo, direccion, coordenadas, telefono, horario, foto, calificacion`;

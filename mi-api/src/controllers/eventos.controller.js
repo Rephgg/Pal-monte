@@ -15,7 +15,7 @@
  *  - DELETE /api/admin/eventos/:evento_id
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 // GET /api/eventos
 const getAll = async (req, res) => {

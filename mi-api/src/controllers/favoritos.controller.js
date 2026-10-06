@@ -7,7 +7,7 @@
  *  - DELETE /api/favoritos?usuario_id=&ruta_id=
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 // GET /api/favoritos?usuario_id=
 const getByUsuario = async (req, res) => {

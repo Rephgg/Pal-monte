@@ -7,7 +7,7 @@
  *  - DELETE /api/resenas/:resena_id
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 // POST /api/resenas
 const create = async (req, res) => {

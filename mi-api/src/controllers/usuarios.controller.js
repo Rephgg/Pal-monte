@@ -14,7 +14,7 @@
  * ==============================================
  */
 const bcrypt = require('bcryptjs');
-const pool = require('../db');
+const pool = require('../config/db');
 
 // POST /api/registro
 const registro = async (req, res) => {

@@ -2,7 +2,7 @@
  * Model EVENTOS (tablas `evento` y `asistencia_evento`)
  * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 // ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, titulo, descripcion, fecha, hora_inicio, lugar, cupo_max, cupo_actual, cancelado`;
