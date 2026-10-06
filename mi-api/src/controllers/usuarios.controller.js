@@ -15,7 +15,16 @@
  */
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
+
+/** Genera un JWT firmado con la clave del .env */
+const firmarToken = (usuario) =>
+  jwt.sign(
+    { id: usuario.id, email: usuario.email, rol: usuario.rol },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN }
+  );
 
 // POST /api/registro
 const registro = async (req, res) => {
@@ -41,7 +50,9 @@ const registro = async (req, res) => {
 
     await pool.query('INSERT INTO perfil (id_usuario, nivel_ciclista) VALUES (?, ?)', [user_id, nivel]);
 
-    res.status(201).json({ ok: true, msg: 'Usuario registrado exitosamente', id: user_id });
+    const token = firmarToken({ id: user_id, email, rol: 'ciclista' });
+
+    res.status(201).json({ ok: true, msg: 'Usuario registrado exitosamente', id: user_id, token });
   } catch (err) {
     res.status(500).json({ ok: false, msg: 'Error de conexión', error: err.message });
   }
@@ -76,7 +87,9 @@ const login = async (req, res) => {
       [u.id, token, expira]
     );
 
-    res.json({ ok: true, data: { id: u.id, nombre: u.nombre, email: u.email, nivel: u.nivel, rol: u.rol, token } });
+    const jwtToken = firmarToken({ id: u.id, email: u.email, rol: u.rol });
+
+    res.json({ ok: true, token: jwtToken, data: { id: u.id, nombre: u.nombre, email: u.email, nivel: u.nivel, rol: u.rol, token } });
   } catch (err) {
     res.status(500).json({ ok: false, msg: 'Error de conexión', error: err.message });
   }
