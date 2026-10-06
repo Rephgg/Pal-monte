@@ -29,10 +29,15 @@ través de una **API REST** y una **base de datos única**:
              │  mysql-connector (puerto 3306)
              ▼
 ┌─────────────────────────┐
-│   BASE DE DATOS          │   MySQL (9 tablas)
+│   BASE DE DATOS          │   MySQL (24 tablas)
 │   palmonte               │
 └─────────────────────────┘
 ```
+
+> **Nota de arquitectura actual:** el backend de producción en desarrollo es
+> **`mi-api/`** (Node.js + Express, puerto 3000), que consume las 24 tablas.
+> El backend Python/FastAPI de este manual corresponde a la versión original
+> (EV01) con las 9 tablas base; ambos comparten el mismo `database/palmonte.sql`.
 
 Los módulos integrados son:
 
@@ -158,9 +163,10 @@ activo), levanta la API y abre la página principal en el navegador.
 |---|---|---|---|
 | Carlos | `carlos@email.com` | `123456` | ciclista |
 | Mariana | `mariana@email.com` | `123456` | ciclista |
-| Andrés | `andres@email.com` | `123456` | ciclista |
+| Andrés | `andres@email.com` | `123456` | organizador |
 | Laura | `laura@email.com` | `123456` | ciclista |
-| Pedro | `pedro@email.com` | `123456` | ciclista |
+| Pedro | `pedro@email.com` | `123456` | administrador |
+| 777pro | `juan77@gmail.com` | `123456` | ciclista |
 
 También puedes crear una cuenta nueva desde el botón **"Registrarme"**.
 
