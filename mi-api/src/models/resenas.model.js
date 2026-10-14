@@ -3,7 +3,7 @@
  * Una reseña es de ruta O de comercio (check chk_resena_tipo).
  * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 // ? = placeholder seguro (evita SQL Injection)
 
 const findByUsuarioRuta = async (id_usuario, id_ruta) => {

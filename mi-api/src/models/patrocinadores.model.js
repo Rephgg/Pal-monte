@@ -2,7 +2,7 @@
  * Model PATROCINADORES (tablas `patrocinador` y `patrocinador_evento`)
  * Empresas patrocinadoras y su relación N:M con eventos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 /* ---------------- PATROCINADORES ---------------- */
 

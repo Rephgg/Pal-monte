@@ -9,7 +9,7 @@
  *  - DELETE /api/admin/comercios/:comercio_id
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const COLUMNS = `id, nombre, tipo, direccion, coordenadas, telefono, horario, foto, calificacion`;
 

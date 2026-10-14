@@ -9,7 +9,7 @@
  *  - DELETE /api/admin/rutas/:ruta_id
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const COLUMNS = `id, nombre, descripcion, distancia_km, dificultad, tipo_bici,
                  tiempo_estimado, coordenadas, zona, elevacion, superficie, imagen`;

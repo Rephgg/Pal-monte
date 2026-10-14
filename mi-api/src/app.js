@@ -2,24 +2,40 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+
+const { loggerMiddleware } = require('./middlewares/loggerMiddleware');
+const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 
 const app = express();
 
-// ─── Middlewares globales (terceros) ───
-app.use(cors());                // Habilita CORS
-app.use(morgan('dev'));         // Logging de requests
-app.use(express.json());        // Parsear body JSON
+// =====================================================
+// MIDDLEWARES GLOBALES
+// Se ejecutan en cada peticion, en este orden, antes
+// de llegar a cualquier ruta.
+// =====================================================
 
-// ─── Middleware personalizado global ───
-app.use((req, res, next) => {
-  const ts = new Date().toISOString();
-  console.log(`[${ts}] ${req.method} ${req.url}`);
-  next(); // Pasar al siguiente middleware
+// 1. CORS: permite que el frontend (otra IP/puerto) consuma la API
+app.use(cors());
+
+// 2. Logging HTTP: Morgan imprime cada peticion en consola
+app.use(morgan('dev'));
+
+// 3. Parsear body JSON
+app.use(express.json());
+
+// 4. Limite de peticiones: evita abuso/fuerza bruta
+const generalLimiter = rateLimit({
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
+  max: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, msg: 'Demasiadas peticiones, intenta mas tarde' },
 });
+app.use('/api', generalLimiter);
 
-// ─── Rutas de autenticación ───
-const authRouter = require('./routes/auth.routes');
-app.use('/api/auth', authRouter);
+// 5. Middleware personalizado global: log con fecha y metodo
+app.use(loggerMiddleware);
 
 // =====================================================
 // CABLEADO DE RUTAS
@@ -70,14 +86,16 @@ app.use('/api', logrosRouter);
 const patrocinadoresRouter = require('./routes/patrocinadores.routes');
 app.use('/api', patrocinadoresRouter);
 const reportesRouter = require('./routes/reportes.routes');
-app.use('/api', reportosRouter);
+app.use('/api', reportesRouter);
 const horariosComercioRouter = require('./routes/horariosComercio.routes');
 app.use('/api', horariosComercioRouter);
 
-// ─── Middleware de errores global (al final) ───
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ ok: false, error: 'Error interno del servidor' });
-});
+// =====================================================
+// MIDDLEWARE DE ERRORES GLOBAL
+// Va al final: primero 404 para rutas inexistentes,
+// luego el manejador de errores (4 parametros).
+// =====================================================
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;

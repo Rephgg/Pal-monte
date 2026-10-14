@@ -2,7 +2,7 @@
  * Model NOTIFICACIONES (tabla `notificacion`)
  * Avisos por usuario: seguidores, me gusta, comentarios, eventos, logros y sistema.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const getByUsuario = async (id_usuario) => {
   const [rows] = await pool.query(

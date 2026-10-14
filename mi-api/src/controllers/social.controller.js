@@ -162,7 +162,7 @@ const addComentario = async (req, res) => {
 
     const result = await social.addComentario({ id_publicacion, id_usuario, texto });
 
-    const [dueño] = await require('../db').query('SELECT id_usuario FROM publicacion WHERE id = ?', [id_publicacion]);
+    const [dueño] = await require('../config/db').query('SELECT id_usuario FROM publicacion WHERE id = ?', [id_publicacion]);
     if (dueño.length > 0 && dueño[0].id_usuario !== id_usuario) {
       await notificaciones.create({
         id_usuario: dueño[0].id_usuario,
@@ -202,7 +202,7 @@ const darMeGusta = async (req, res) => {
 
     await social.darMeGusta(publicacion_id, id_usuario);
 
-    const [dueño] = await require('../db').query('SELECT id_usuario FROM publicacion WHERE id = ?', [publicacion_id]);
+    const [dueño] = await require('../config/db').query('SELECT id_usuario FROM publicacion WHERE id = ?', [publicacion_id]);
     if (dueño.length > 0 && dueño[0].id_usuario !== id_usuario) {
       await notificaciones.create({
         id_usuario: dueño[0].id_usuario,

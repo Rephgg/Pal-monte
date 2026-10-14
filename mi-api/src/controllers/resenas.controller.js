@@ -7,7 +7,7 @@
  *  - DELETE /api/resenas/:resena_id
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const syncComercioCalificacion = async (id_comercio) => {
   const [prom] = await pool.query('SELECT AVG(calificacion) as promedio FROM resena WHERE id_comercio = ?', [id_comercio]);

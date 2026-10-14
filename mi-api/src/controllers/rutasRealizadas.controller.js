@@ -6,7 +6,7 @@
  *  - POST   /api/rutas-realizadas?usuario_id=&ruta_id=&tiempo_real=&observaciones=
  * ==============================================
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 // GET /api/rutas-realizadas?usuario_id=
 const getByUsuario = async (req, res) => {

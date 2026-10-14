@@ -2,7 +2,7 @@
  * Model LOGROS (tablas `logro` y `logro_usuario`)
  * Catálogo de logros y logros desbloqueados por cada usuario.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 /* ---------------- CATÁLOGO DE LOGROS ---------------- */
 

@@ -2,7 +2,7 @@
  * Model GEOMETRÍA DE RUTAS (tablas `punto_ruta` y `parada_ruta`)
  * Traza del recorrido (waypoints) y puntos de interés de cada ruta.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 /* ---------------- PUNTOS DE LA TRAZA ---------------- */
 

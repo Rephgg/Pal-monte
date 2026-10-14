@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-// createPool: reutiliza conexiones automáticamente
+// createPool: reutiliza conexiones automaticamente
 const pool = mysql.createPool({
   host:     process.env.DB_HOST,
   port:     process.env.DB_PORT,
@@ -12,15 +12,15 @@ const pool = mysql.createPool({
   waitForConnections: true,
 });
 
-// Verificar conexión al iniciar
+// Verificar conexion al iniciar
 pool.getConnection()
   .then(conn => {
-    console.log('✅ MySQL conectado');
+    console.log('MySQL conectado');
     conn.release(); // devolver al pool
   })
   .catch(err => {
-    console.error('❌ Error MySQL:', err.message);
-    process.exit(1); // detener app si no hay DB
+    console.warn('AVISO MySQL no disponible:', err.message);
+    console.warn('El servidor arranca igual; la BD se reconectara cuando este disponible.');
   });
 
 module.exports = pool;

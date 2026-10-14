@@ -2,7 +2,7 @@
  * Model BICICLETAS (tabla `bicicleta`)
  * Bicicletas que registra cada usuario.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const getByUsuario = async (id_usuario) => {
   const [rows] = await pool.query(

@@ -2,7 +2,7 @@
  * Model HORARIOS DE COMERCIO (tabla `horario_comercio`)
  * Horarios de atención por día de la semana (1=Lunes, 7=Domingo).
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 const getByComercio = async (id_comercio) => {
   const [rows] = await pool.query(

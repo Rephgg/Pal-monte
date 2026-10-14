@@ -2,7 +2,7 @@
  * Model FAVORITOS (tabla `favorito`, PK compuesta id_usuario + id_ruta)
  * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 // ? = placeholder seguro (evita SQL Injection)
 
 const getByUsuario = async (usuario_id) => {

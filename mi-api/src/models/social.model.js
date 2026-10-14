@@ -2,7 +2,7 @@
  * Model SOCIAL (tablas `seguidor`, `publicacion`, `comentario`, `me_gusta`)
  * Comunidad: seguimiento entre ciclistas, publicaciones, comentarios y me gusta.
  */
-const pool = require('../db');
+const pool = require('../config/db');
 
 /* ---------------- SEGUIDORES ---------------- */
 
