@@ -57,3 +57,11 @@ class Resena(BaseModel):
     id_comercio: Optional[int] = None
     calificacion: int
     comentario: str
+
+class UsuarioAdminUpdate(BaseModel):
+    nombre: Optional[str] = None
+    email: Optional[str] = None
+    telefono: Optional[str] = None
+    nivel: Optional[str] = None
+    rol: Optional[str] = None
+    activo: Optional[int] = None

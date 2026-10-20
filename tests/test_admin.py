@@ -149,3 +149,80 @@ class TestAdminUsuarios:
         )
 
     test_desactivar_usuario_no_aplica = True
+
+    def test_actualizar_usuario_admin(self, api, usuario_test):
+        resp = api.put(
+            f"/api/admin/usuarios/{usuario_test['id']}",
+            json={
+                "nombre": "Admin Editado",
+                "telefono": "3000000111",
+                "nivel": "avanzado",
+                "rol": "ciclista"
+            }
+        )
+        assert resp.status_code == 200
+        assert "actualizado" in resp.json()["message"].lower()
+
+    def test_actualizar_usuario_admin_no_existente(self, api):
+        resp = api.put(
+            "/api/admin/usuarios/9999",
+            json={"nombre": "No existe"}
+        )
+        assert resp.status_code == 404
+
+
+class TestAdminEventos:
+    def test_listar_eventos_admin(self, api):
+        resp = api.get("/api/admin/eventos")
+        assert resp.status_code == 200
+        assert isinstance(resp.json(), list)
+
+    def test_actualizar_evento(self, api):
+        resp_create = api.post(
+            "/api/eventos",
+            params={"organizador_id": 1},
+            json={
+                "titulo": "Evento Update",
+                "descripcion": "Para actualizar",
+                "fecha": "2027-01-15",
+                "hora_inicio": "07:00",
+                "lugar": "Parque Principal",
+                "cupo_max": 30
+            }
+        )
+        evento_id = resp_create.json()["id"]
+
+        resp = api.put(f"/api/admin/eventos/{evento_id}", json={
+            "titulo": "Evento Actualizado",
+            "descripcion": "Actualizado",
+            "fecha": "2027-01-20",
+            "hora_inicio": "08:00",
+            "lugar": "Plaza Central",
+            "cupo_max": 40
+        })
+        assert resp.status_code == 200
+        assert "actualizado" in resp.json()["message"].lower()
+
+        api.delete(f"/api/admin/eventos/{evento_id}")
+
+    def test_eliminar_evento(self, api):
+        resp_create = api.post(
+            "/api/eventos",
+            params={"organizador_id": 1},
+            json={
+                "titulo": "Evento Delete",
+                "descripcion": "Para eliminar",
+                "fecha": "2027-02-10",
+                "hora_inicio": "09:00",
+                "lugar": "Ciclovía",
+                "cupo_max": 20
+            }
+        )
+        evento_id = resp_create.json()["id"]
+
+        resp = api.delete(f"/api/admin/eventos/{evento_id}")
+        assert resp.status_code == 200
+        assert "eliminado" in resp.json()["message"].lower()
+
+        resp_get = api.get(f"/api/eventos/{evento_id}")
+        assert resp_get.status_code == 404

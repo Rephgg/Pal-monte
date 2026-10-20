@@ -54,3 +54,20 @@ class TestFavoritos:
             "/api/favoritos",
             params={"usuario_id": usuario_test["id"], "ruta_id": 1}
         )
+
+    def test_listar_favoritos(self, api, usuario_test):
+        api.post(
+            "/api/favoritos",
+            params={"usuario_id": usuario_test["id"], "ruta_id": 1}
+        )
+        resp = api.get("/api/favoritos", params={"usuario_id": usuario_test["id"]})
+        assert resp.status_code == 200
+        favoritos = resp.json()
+        assert isinstance(favoritos, list)
+        assert len(favoritos) > 0
+        assert "id" in favoritos[0]
+
+        api.delete(
+            "/api/favoritos",
+            params={"usuario_id": usuario_test["id"], "ruta_id": 1}
+        )

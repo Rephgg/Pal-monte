@@ -63,3 +63,19 @@ class TestRutasRealizadas:
         resp = api.get(f"/api/perfil/{usuario_test['id']}")
         historial = resp.json()["historial"]
         assert len(historial) > 0
+
+    def test_listar_rutas_realizadas(self, api, usuario_test):
+        api.post(
+            "/api/rutas-realizadas",
+            params={
+                "usuario_id": usuario_test["id"],
+                "ruta_id": 1,
+                "tiempo_real": 1.5
+            }
+        )
+        resp = api.get("/api/rutas-realizadas", params={"usuario_id": usuario_test["id"]})
+        assert resp.status_code == 200
+        historial = resp.json()
+        assert isinstance(historial, list)
+        assert len(historial) > 0
+        assert "id" in historial[0]

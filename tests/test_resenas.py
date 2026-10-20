@@ -63,3 +63,43 @@ class TestResenas:
             "comentario": "Sin calificación"
         })
         assert resp.status_code == 400
+
+    def test_actualizar_resena(self, api, usuario_test):
+        api.post("/api/resenas", json={
+            "id_usuario": usuario_test["id"],
+            "id_ruta": 1,
+            "calificacion": 4,
+            "comentario": "Reseña a editar"
+        })
+        detalle = api.get("/api/rutas/1").json()
+        resena_id = detalle["reseñas"][0]["id"]
+
+        resp = api.put(f"/api/resenas/{resena_id}", json={
+            "calificacion": 5,
+            "comentario": "Reseña editada"
+        })
+        assert resp.status_code == 200
+        assert "actualizada" in resp.json()["message"].lower()
+
+        api.delete(f"/api/resenas/{resena_id}")
+
+    def test_actualizar_resena_no_existente(self, api):
+        resp = api.put("/api/resenas/9999", json={
+            "calificacion": 5,
+            "comentario": "No existe"
+        })
+        assert resp.status_code == 404
+
+    def test_eliminar_resena(self, api, usuario_test):
+        api.post("/api/resenas", json={
+            "id_usuario": usuario_test["id"],
+            "id_ruta": 3,
+            "calificacion": 3,
+            "comentario": "Reseña a eliminar"
+        })
+        detalle = api.get("/api/rutas/3").json()
+        resena_id = detalle["reseñas"][0]["id"]
+
+        resp = api.delete(f"/api/resenas/{resena_id}")
+        assert resp.status_code == 200
+        assert "eliminada" in resp.json()["message"].lower()

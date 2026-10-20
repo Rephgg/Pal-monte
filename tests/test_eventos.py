@@ -93,3 +93,57 @@ class TestEventos:
                 headers={"Content-Type": "application/json"}
             )
             assert resp.status_code == 400
+
+    def test_confirmar_asistencia(self, api, usuario_test):
+        resp_eventos = api.get("/api/eventos")
+        if resp_eventos.json():
+            evento_id = resp_eventos.json()[0]["id"]
+            api.post(
+                f"/api/eventos/{evento_id}/inscribir",
+                json={"usuario_id": usuario_test["id"]}
+            )
+            resp = api.put(
+                f"/api/eventos/{evento_id}/confirmar",
+                json={"usuario_id": usuario_test["id"]}
+            )
+            assert resp.status_code == 200
+            assert "confirmada" in resp.json()["message"].lower()
+
+            api.request(
+                "DELETE",
+                f"/api/eventos/{evento_id}/cancelar-inscripcion",
+                content=json.dumps({"usuario_id": usuario_test["id"]}),
+                headers={"Content-Type": "application/json"}
+            )
+
+    def test_confirmar_sin_inscripcion(self, api, usuario_test):
+        resp_eventos = api.get("/api/eventos")
+        if resp_eventos.json():
+            evento_id = resp_eventos.json()[0]["id"]
+            resp = api.put(
+                f"/api/eventos/{evento_id}/confirmar",
+                json={"usuario_id": usuario_test["id"]}
+            )
+            assert resp.status_code == 400
+
+    def test_marcar_asistio(self, api, usuario_test):
+        resp_eventos = api.get("/api/eventos")
+        if resp_eventos.json():
+            evento_id = resp_eventos.json()[0]["id"]
+            api.post(
+                f"/api/eventos/{evento_id}/inscribir",
+                json={"usuario_id": usuario_test["id"]}
+            )
+            resp = api.put(
+                f"/api/eventos/{evento_id}/asistio",
+                json={"usuario_id": usuario_test["id"]}
+            )
+            assert resp.status_code == 200
+            assert "registrada" in resp.json()["message"].lower()
+
+            api.request(
+                "DELETE",
+                f"/api/eventos/{evento_id}/cancelar-inscripcion",
+                content=json.dumps({"usuario_id": usuario_test["id"]}),
+                headers={"Content-Type": "application/json"}
+            )

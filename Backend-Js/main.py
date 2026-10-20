@@ -343,7 +343,7 @@ def get_perfil(usuario_id: int):
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
         SELECT u.id, u.nombre, u.email, u.telefono, u.fecha_registro,
-               p.km_recorridos, p.nivel_ciclista, p.rol
+               p.foto, p.km_recorridos, p.nivel_ciclista, p.rol
         FROM usuario u
         JOIN perfil p ON u.id = p.id_usuario
         WHERE u.id = %s
@@ -379,7 +379,7 @@ def get_perfil(usuario_id: int):
     return perfil
 
 @app.put("/api/perfil/{usuario_id}")
-def update_perfil(usuario_id: int, nombre: str, telefono: Optional[str] = None, nivel: Optional[str] = None):
+def update_perfil(usuario_id: int, nombre: str, telefono: Optional[str] = None, nivel: Optional[str] = None, foto: Optional[str] = None):
     conn = get_db_connection()
     if not conn:
         raise HTTPException(status_code=500, detail="Error de conexión")
@@ -392,6 +392,10 @@ def update_perfil(usuario_id: int, nombre: str, telefono: Optional[str] = None, 
     if nivel:
         cursor.execute("UPDATE perfil SET nivel_ciclista = %s WHERE id_usuario = %s", 
                        (nivel, usuario_id))
+    
+    if foto:
+        cursor.execute("UPDATE perfil SET foto = %s WHERE id_usuario = %s", 
+                       (foto, usuario_id))
     
     conn.commit()
     cursor.close()
@@ -475,7 +479,7 @@ def get_ruta(ruta_id: int):
         raise HTTPException(status_code=404, detail="Ruta no encontrada")
     
     cursor.execute("""
-        SELECT r.calificacion, r.comentario, r.fecha, u.nombre as usuario
+        SELECT r.id, r.calificacion, r.comentario, r.fecha, u.nombre as usuario
         FROM resena r
         JOIN usuario u ON r.id_usuario = u.id
         WHERE r.id_ruta = %s
@@ -605,7 +609,7 @@ def get_comercio(comercio_id: int):
         raise HTTPException(status_code=404, detail="Comercio no encontrado")
     
     cursor.execute("""
-        SELECT r.calificacion, r.comentario, r.fecha, u.nombre as usuario
+        SELECT r.id, r.calificacion, r.comentario, r.fecha, u.nombre as usuario
         FROM resena r
         JOIN usuario u ON r.id_usuario = u.id
         WHERE r.id_comercio = %s
@@ -865,6 +869,143 @@ def cancelar_evento(evento_id: int):
     
     return {"message": "Evento cancelado"}
 
+@app.put("/api/eventos/{evento_id}/confirmar")
+async def confirmar_asistencia(evento_id: int, request: Request):
+    try:
+        data = await request.json()
+        usuario_id = data.get("usuario_id")
+        
+        if not usuario_id:
+            raise HTTPException(status_code=400, detail="usuario_id es requerido")
+        
+        conn = get_db_connection()
+        if not conn:
+            raise HTTPException(status_code=500, detail="Error de conexión")
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        cursor.execute("SELECT * FROM asistencia_evento WHERE id_usuario = %s AND id_evento = %s", (usuario_id, evento_id))
+        if not cursor.fetchone():
+            cursor.close()
+            conn.close()
+            raise HTTPException(status_code=400, detail="No estás inscrito a este evento")
+        
+        cursor.execute("""
+            UPDATE asistencia_evento SET confirmado = 1
+            WHERE id_usuario = %s AND id_evento = %s
+        """, (usuario_id, evento_id))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return {"message": "Asistencia confirmada"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/api/eventos/{evento_id}/asistio")
+async def marcar_asistio(evento_id: int, request: Request):
+    try:
+        data = await request.json()
+        usuario_id = data.get("usuario_id")
+        
+        if not usuario_id:
+            raise HTTPException(status_code=400, detail="usuario_id es requerido")
+        
+        conn = get_db_connection()
+        if not conn:
+            raise HTTPException(status_code=500, detail="Error de conexión")
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        cursor.execute("SELECT * FROM asistencia_evento WHERE id_usuario = %s AND id_evento = %s", (usuario_id, evento_id))
+        if not cursor.fetchone():
+            cursor.close()
+            conn.close()
+            raise HTTPException(status_code=400, detail="No estás inscrito a este evento")
+        
+        cursor.execute("""
+            UPDATE asistencia_evento SET confirmado = 1, asistio = 1
+            WHERE id_usuario = %s AND id_evento = %s
+        """, (usuario_id, evento_id))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return {"message": "Asistencia registrada"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ==============================================
+# ADMIN - EVENTOS (CRUD completo)
+# ==============================================
+
+@app.get("/api/admin/eventos")
+def get_eventos_admin():
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT e.id, e.titulo, e.descripcion, e.fecha, e.hora_inicio, e.lugar,
+               e.cupo_max, e.cupo_actual, e.cancelado, u.nombre as organizador
+        FROM evento e
+        LEFT JOIN usuario u ON e.id_organizador = u.id
+        ORDER BY e.fecha DESC
+    """)
+    
+    eventos = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    return eventos
+
+@app.put("/api/admin/eventos/{evento_id}")
+def update_evento(evento_id: int, evento: Evento):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE evento SET 
+            titulo = %s, descripcion = %s, fecha = %s, hora_inicio = %s,
+            lugar = %s, cupo_max = %s
+        WHERE id = %s
+    """, (evento.titulo, evento.descripcion, evento.fecha, evento.hora_inicio,
+          evento.lugar, evento.cupo_max, evento_id))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return {"message": "Evento actualizado exitosamente"}
+
+@app.delete("/api/admin/eventos/{evento_id}")
+def delete_evento(evento_id: int):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM evento WHERE id = %s", (evento_id,))
+    conn.commit()
+    
+    cursor.close()
+    conn.close()
+    
+    return {"message": "Evento eliminado exitosamente"}
+
 # ==============================================
 # FAVORITOS
 # ==============================================
@@ -909,6 +1050,27 @@ def remove_favorito(usuario_id: int, ruta_id: int):
     conn.close()
     
     return {"message": "Eliminado de favoritos"}
+
+@app.get("/api/favoritos")
+def get_favoritos(usuario_id: int):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.id, r.nombre, r.distancia_km, r.dificultad, r.zona, f.fecha as fecha_favorito
+        FROM favorito f
+        JOIN ruta r ON f.id_ruta = r.id
+        WHERE f.id_usuario = %s
+        ORDER BY f.fecha DESC
+    """, (usuario_id,))
+    
+    favoritos = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    return favoritos
 
 # ==============================================
 # RESEÑAS
@@ -979,6 +1141,64 @@ async def add_resena(request: Request):
         print("Error:", e)
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.put("/api/resenas/{resena_id}")
+async def update_resena(resena_id: int, request: Request):
+    try:
+        data = await request.json()
+        
+        calificacion = data.get("calificacion")
+        comentario = data.get("comentario")
+        
+        if not calificacion:
+            raise HTTPException(status_code=400, detail="calificacion es requerida")
+        
+        if not comentario:
+            raise HTTPException(status_code=400, detail="comentario es requerido")
+        
+        conn = get_db_connection()
+        if not conn:
+            raise HTTPException(status_code=500, detail="Error de conexión")
+        
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT id FROM resena WHERE id = %s", (resena_id,))
+        if not cursor.fetchone():
+            cursor.close()
+            conn.close()
+            raise HTTPException(status_code=404, detail="Reseña no encontrada")
+        
+        cursor.execute("""
+            UPDATE resena SET calificacion = %s, comentario = %s
+            WHERE id = %s
+        """, (calificacion, comentario, resena_id))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return {"message": "Reseña actualizada exitosamente"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print("Error:", e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/api/resenas/{resena_id}")
+def delete_resena(resena_id: int):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM resena WHERE id = %s", (resena_id,))
+    conn.commit()
+    
+    cursor.close()
+    conn.close()
+    
+    return {"message": "Reseña eliminada exitosamente"}
+
 # ==============================================
 # ADMIN - USUARIOS
 # ==============================================
@@ -1033,6 +1253,49 @@ def delete_usuario(usuario_id: int):
     
     return {"message": "Usuario desactivado"}
 
+@app.put("/api/admin/usuarios/{usuario_id}")
+def update_usuario_admin(usuario_id: int, datos: UsuarioAdminUpdate):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor(dictionary=True)
+    
+    cursor.execute("SELECT id FROM usuario WHERE id = %s", (usuario_id,))
+    if not cursor.fetchone():
+        cursor.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    
+    if datos.nombre is not None:
+        cursor.execute("UPDATE usuario SET nombre = %s WHERE id = %s", (datos.nombre, usuario_id))
+    
+    if datos.email is not None:
+        cursor.execute("SELECT id FROM usuario WHERE email = %s AND id != %s", (datos.email, usuario_id))
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            raise HTTPException(status_code=400, detail="Email ya registrado")
+        cursor.execute("UPDATE usuario SET email = %s WHERE id = %s", (datos.email, usuario_id))
+    
+    if datos.telefono is not None:
+        cursor.execute("UPDATE usuario SET telefono = %s WHERE id = %s", (datos.telefono, usuario_id))
+    
+    if datos.nivel is not None:
+        cursor.execute("UPDATE perfil SET nivel_ciclista = %s WHERE id_usuario = %s", (datos.nivel, usuario_id))
+    
+    if datos.rol is not None:
+        cursor.execute("UPDATE perfil SET rol = %s WHERE id_usuario = %s", (datos.rol, usuario_id))
+    
+    if datos.activo is not None:
+        cursor.execute("UPDATE usuario SET activo = %s WHERE id = %s", (datos.activo, usuario_id))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return {"message": "Usuario actualizado exitosamente"}
+
 # ==============================================
 # RUTAS REALIZADAS (Historial)
 # ==============================================
@@ -1078,6 +1341,28 @@ def add_ruta_realizada(usuario_id: int, ruta_id: int, tiempo_real: float, observ
     conn.close()
     
     return {"message": "Ruta registrada como completada", "km_agregados": distancia_km}
+
+@app.get("/api/rutas-realizadas")
+def get_rutas_realizadas(usuario_id: int):
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Error de conexión")
+    
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.id, r.nombre, r.distancia_km, r.dificultad, r.zona,
+               rr.fecha, rr.tiempo_real, rr.observaciones
+        FROM ruta_realizada rr
+        JOIN ruta r ON rr.id_ruta = r.id
+        WHERE rr.id_usuario = %s
+        ORDER BY rr.fecha DESC
+    """, (usuario_id,))
+    
+    historial = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    return historial
 
 # ==============================================
 # EJECUCIÓN
