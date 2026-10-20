@@ -1,0 +1,703 @@
+{
+  "info": {
+    "name": "PalMonte API (backend)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Publicos",
+      "item": [
+        {
+          "name": "GET Rutas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas"
+            }
+          }
+        },
+        {
+          "name": "GET Rutas (dificultad=media)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas?dificultad=media"
+            }
+          }
+        },
+        {
+          "name": "GET Ruta por id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas/1"
+            }
+          }
+        },
+        {
+          "name": "GET Comercios",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/comercios"
+            }
+          }
+        },
+        {
+          "name": "GET Comercios (tipo=cafe)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/comercios?tipo=cafe"
+            }
+          }
+        },
+        {
+          "name": "GET Comercio por id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/comercios/1"
+            }
+          }
+        },
+        {
+          "name": "GET Horarios de comercio",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/comercios/1/horarios"
+            }
+          }
+        },
+        {
+          "name": "GET Eventos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/eventos"
+            }
+          }
+        },
+        {
+          "name": "GET Evento por id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/eventos/1"
+            }
+          }
+        },
+        {
+          "name": "GET Logros",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/logros"
+            }
+          }
+        },
+        {
+          "name": "GET Patrocinadores",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/patrocinadores"
+            }
+          }
+        },
+        {
+          "name": "GET Puntos de ruta",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas/1/puntos"
+            }
+          }
+        },
+        {
+          "name": "GET Paradas de ruta",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas/1/paradas"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Autenticacion",
+      "item": [
+        {
+          "name": "POST Registro",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/registro"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan Prueba\",\n  \"email\": \"juan.prueba@example.com\",\n  \"password\": \"123456\",\n  \"telefono\": \"3001234567\",\n  \"nivel\": \"principiante\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST Login (admin)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/login"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"pedro@email.com\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Protegidos (token)",
+      "item": [
+        {
+          "name": "GET Mi perfil (id 5)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/perfil/5"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT Actualizar perfil",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/api/api/perfil/5"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pedro Sánchez\",\n  \"telefono\": \"3123456789\",\n  \"nivel\": \"avanzado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT Cambiar contrasena",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/api/api/perfil/5/password"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password_actual\": \"123456\",\n  \"password_nueva\": \"654321\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Favoritos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Agregar favorito",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5&ruta_id=1"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE Quitar favorito",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5&ruta_id=1"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Historial rutas realizadas",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas-realizadas?usuario_id=5"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Registrar ruta realizada",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/rutas-realizadas?usuario_id=5&ruta_id=1&tiempo_real=50&observaciones=prueba"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Crear resena",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/resenas"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_usuario\": 5,\n  \"id_ruta\": 3,\n  \"calificacion\": 5,\n  \"comentario\": \"Prueba desde Thunder Client\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Inscribirse a evento",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/eventos/1/inscribir"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuario_id\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Admin (token + rol administrador)",
+      "item": [
+        {
+          "name": "GET Admin usuarios",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/usuarios"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT Cambiar rol de usuario",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/usuarios/1/rol"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rol\": \"organizador\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Admin eventos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/eventos"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Crear ruta",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/rutas"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ruta prueba Thunder\",\n  \"descripcion\": \"Creada desde Thunder Client\",\n  \"distancia_km\": 15.5,\n  \"dificultad\": \"media\",\n  \"tipo_bici\": \"mtb\",\n  \"tiempo_estimado\": \"01:30:00\",\n  \"zona\": \"Ibagué\",\n  \"elevacion\": 300,\n  \"superficie\": \"mixta\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT Actualizar ruta",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/rutas/1"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ruta editada\",\n  \"descripcion\": \"Editada\",\n  \"distancia_km\": 20,\n  \"dificultad\": \"alta\",\n  \"zona\": \"Ibagué\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE Eliminar ruta",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/rutas/1"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Crear comercio",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/comercios"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Taller Prueba\",\n  \"tipo\": \"taller\",\n  \"direccion\": \"Calle 10 #20-30\",\n  \"telefono\": \"3000000000\",\n  \"horario\": \"8:00-18:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Crear logro",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:3000/api/api/admin/logros"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Logro Prueba\",\n  \"descripcion\": \"Prueba\",\n  \"tipo_criterio\": \"km\",\n  \"valor_requerido\": 100,\n  \"icono\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJwZWRyb0BlbWFpbC5jb20iLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzkxOTU2MTk1LCJleHAiOjE4MjM0OTIxOTV9.LizjhRDtXccByiHIhwytT9GjGXoj4B96WTRDtZi8yro",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Casos de error (esperados)",
+      "item": [
+        {
+          "name": "GET Perfil SIN token (espera 401)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/perfil/5"
+            }
+          }
+        },
+        {
+          "name": "GET Perfil token invalido (espera 403)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/api/perfil/5"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "token.invalido.123",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
