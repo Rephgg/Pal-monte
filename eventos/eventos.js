@@ -8,7 +8,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html">Rutas</a>
@@ -44,7 +44,7 @@ const obtenerDiaMes = (fecha) => {
 };
 
 const obtenerNombreMes = (mesNumero) => {
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     return meses[mesNumero - 1] || "Mes";
 };
@@ -52,25 +52,25 @@ const obtenerNombreMes = (mesNumero) => {
 const mostrarEventos = (eventos) => {
     const container = document.getElementById("eventosList");
     if (!container) return;
-    
+
     container.innerHTML = "";
-    
+
     if (eventos.length === 0) {
         container.innerHTML = '<p class="sin-eventos">No hay eventos próximos</p>';
         return;
     }
-    
+
     eventos.forEach(evento => {
         const { dia, mes } = obtenerDiaMes(evento.fecha);
         const nombreMes = obtenerNombreMes(mes);
         const cuposRestantes = evento.cupo_max - evento.cupo_actual;
-        
+
         const eventCard = document.createElement("div");
         eventCard.className = "event-card";
         if (evento.cancelado) {
             eventCard.classList.add("cancelado");
         }
-        
+
         eventCard.innerHTML = `
             ${evento.cancelado ? '<div class="cancel-tag">CANCELADO</div>' : ''}
             
@@ -92,10 +92,10 @@ const mostrarEventos = (eventos) => {
                 <button class="btn-detalle" data-id="${evento.id}">Ver detalle</button>
             </div>
         `;
-        
+
         container.appendChild(eventCard);
     });
-    
+
     // Configurar botones de ver detalle
     const btnsDetalle = document.querySelectorAll(".btn-detalle");
     btnsDetalle.forEach(btn => {
@@ -112,11 +112,11 @@ const cargarEventos = async () => {
     try {
         const response = await fetch(`${API_URL}/eventos`);
         const eventos = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(eventos.detail || "Error al cargar eventos");
         }
-        
+
         mostrarEventos(eventos);
     } catch (error) {
         console.error("Error:", error);

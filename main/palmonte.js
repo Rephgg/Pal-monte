@@ -10,7 +10,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html">Rutas</a>
@@ -36,7 +36,7 @@ const actualizarHeader = () => {
         `;
         const btnLogin = document.getElementById("btnLoginNav");
         const btnRegistro = document.getElementById("btnRegistroNav");
-        
+
         if (btnLogin) {
             btnLogin.addEventListener("click", () => {
                 window.location.href = "../sesion/iniciarSesion.html";
@@ -63,14 +63,14 @@ const obtenerTextoDificultad = (dificultad) => {
 const cargarRutasDestacadas = async () => {
     const container = document.getElementById("rutasDestacadas");
     if (!container) return;
-    
+
     container.innerHTML = "";
-    
+
     try {
         const response = await fetch(`${API_URL}/rutas`);
         if (!response.ok) throw new Error("Error al cargar rutas");
         const rutas = await response.json();
-        
+
         rutas.slice(0, 3).forEach(ruta => {
             const card = document.createElement("div");
             card.className = "card";
@@ -96,14 +96,14 @@ const cargarRutasDestacadas = async () => {
 const cargarEventosDestacados = async () => {
     const container = document.getElementById("eventosDestacados");
     if (!container) return;
-    
+
     container.innerHTML = "";
-    
+
     try {
         const response = await fetch(`${API_URL}/eventos`);
         if (!response.ok) throw new Error("Error al cargar eventos");
         const eventos = await response.json();
-        
+
         eventos.slice(0, 3).forEach(evento => {
             const card = document.createElement("div");
             card.className = "card";
@@ -128,13 +128,13 @@ const cargarEventosDestacados = async () => {
 const configurarBotones = () => {
     const btnExplorar = document.getElementById("btnExplorar");
     const btnInfo = document.getElementById("btnInfo");
-    
+
     if (btnExplorar) {
         btnExplorar.addEventListener("click", () => {
             window.location.href = "../rutas/rutas.html";
         });
     }
-    
+
     if (btnInfo) {
         btnInfo.addEventListener("click", () => {
             const seccion = document.querySelector(".section");

@@ -14,9 +14,9 @@ const obtenerUsuarioActual = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuarioActual();
-    
+
     if (!usuario) return;
-    
+
     navLinks.innerHTML = `
         <a href="../rutas/rutas.html">Rutas</a>
         <a href="../comercio/comercio.html">Comercios</a>
@@ -24,7 +24,7 @@ const actualizarHeader = () => {
         <a href="../sesion/perfil.html" class="btn">${usuario.nombre}</a>
         <button class="btn" id="btnLogoutHeader">Cerrar sesión</button>
     `;
-    
+
     const btnLogout = document.getElementById("btnLogoutHeader");
     if (btnLogout) {
         btnLogout.addEventListener("click", () => {
@@ -38,22 +38,22 @@ const actualizarHeader = () => {
 const cargarPerfil = async () => {
     const usuario = obtenerUsuarioActual();
     if (!usuario) return;
-    
+
     try {
         const response = await fetch(`${API_URL}/perfil/${usuario.id}`);
         const data = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(data.detail || "Error al cargar perfil");
         }
-        
+
         // Datos personales
         document.getElementById("nombreUsuario").textContent = data.nombre;
         document.getElementById("emailUsuario").textContent = data.email;
         document.getElementById("infoEmail").textContent = data.email;
         document.getElementById("infoTelefono").textContent = data.telefono || "No registrado";
         document.getElementById("infoFecha").textContent = data.fecha_registro || "No registrado";
-        
+
         // Nivel
         let nivelTexto = "";
         switch (data.nivel_ciclista) {
@@ -64,7 +64,7 @@ const cargarPerfil = async () => {
         }
         document.getElementById("nivelUsuario").textContent = nivelTexto;
         document.getElementById("infoNivel").textContent = nivelTexto;
-        
+
         // Estadísticas (calcular desde historial)
         let kmTotal = 0;
         if (data.historial && data.historial.length > 0) {
@@ -75,7 +75,7 @@ const cargarPerfil = async () => {
         document.getElementById("kmRecorridos").textContent = kmTotal;
         document.getElementById("rutasCompletadas").textContent = data.historial ? data.historial.length : 0;
         document.getElementById("eventosInscritos").textContent = "0"; // Pendiente implementar
-        
+
         // Cargar favoritos
         const listaFavoritos = document.getElementById("listaFavoritos");
         if (!data.favoritos || data.favoritos.length === 0) {
@@ -94,7 +94,7 @@ const cargarPerfil = async () => {
                 `;
             });
         }
-        
+
         // Cargar historial
         const listaHistorial = document.getElementById("listaHistorial");
         if (!data.historial || data.historial.length === 0) {
@@ -114,7 +114,7 @@ const cargarPerfil = async () => {
                 `;
             });
         }
-        
+
     } catch (error) {
         console.error("Error al cargar perfil:", error);
         document.getElementById("nombreUsuario").textContent = "Error al cargar";
@@ -125,14 +125,14 @@ const cargarPerfil = async () => {
 const configurarTabs = () => {
     const tabBtns = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
-    
+
     tabBtns.forEach(btn => {
         btn.addEventListener("click", () => {
             const tabId = btn.getAttribute("data-tab");
-            
+
             tabBtns.forEach(b => b.classList.remove("active"));
             tabContents.forEach(c => c.classList.remove("active"));
-            
+
             btn.classList.add("active");
             const targetTab = document.getElementById(`tab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
             if (targetTab) targetTab.classList.add("active");

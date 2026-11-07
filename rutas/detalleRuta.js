@@ -16,7 +16,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html" class="active">Rutas</a>
@@ -102,7 +102,7 @@ const guardarResena = async (usuarioId, rutaId, calificacion, comentario) => {
                 comentario: comentario
             })
         });
-        
+
         if (response.ok) {
             alert("✅ Reseña guardada correctamente");
             window.location.reload();
@@ -137,18 +137,18 @@ const cerrarModal = () => {
 // Guardar ruta completada
 const guardarRutaCompletada = async (usuarioId, rutaId, rutaNombre, distanciaKm) => {
     const tiempoReal = prompt(`¿Cuánto tiempo te tomó completar "${rutaNombre}"? (en horas)`, "2.5");
-    
+
     if (!tiempoReal) {
         return;
     }
-    
+
     const tiempoRealNum = parseFloat(tiempoReal);
-    
+
     if (isNaN(tiempoRealNum) || tiempoRealNum <= 0) {
         alert("⚠️ Por favor ingresa un tiempo válido");
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/rutas-realizadas?usuario_id=${usuarioId}&ruta_id=${rutaId}&tiempo_real=${tiempoRealNum}`, {
             method: "POST",
@@ -156,9 +156,9 @@ const guardarRutaCompletada = async (usuarioId, rutaId, rutaNombre, distanciaKm)
                 "Content-Type": "application/json"
             }
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
             alert(`🎉 ¡Felicidades! Completaste la ruta "${rutaNombre}"\n📏 Distancia: ${distanciaKm} km\n⏱️ Tiempo: ${tiempoRealNum} horas`);
             location.reload();
@@ -178,23 +178,23 @@ const guardarRutaCompletada = async (usuarioId, rutaId, rutaNombre, distanciaKm)
 // Mostrar detalle de la ruta
 const mostrarDetalleRuta = async () => {
     const id = obtenerIdDeURL();
-    
+
     if (!id) {
         window.location.href = "rutas.html";
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/rutas/${id}`);
         const ruta = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(ruta.detail || "Ruta no encontrada");
         }
-        
+
         // Cambiar título de la página
         document.title = `Pal' Monte - ${ruta.nombre}`;
-        
+
         // Hero
         const hero = document.getElementById("hero");
         if (hero) {
@@ -208,7 +208,7 @@ const mostrarDetalleRuta = async () => {
         }
         document.getElementById("rutaNombre").textContent = ruta.nombre;
         document.getElementById("rutaDescripcion").textContent = ruta.descripcion?.split(".")[0] + "." || "";
-        
+
         // Stats
         const statsGrid = document.getElementById("statsGrid");
         if (statsGrid) {
@@ -221,10 +221,10 @@ const mostrarDetalleRuta = async () => {
                 <div class="stat-item">⛰️ ${ruta.elevacion || "?"} m</div>
             `;
         }
-        
+
         // Descripción completa
         document.getElementById("rutaDescripcionCompleta").textContent = ruta.descripcion || "Sin descripción disponible";
-        
+
         // Mapa y coordenadas
         const mapaImg = document.getElementById("mapaImg");
         if (mapaImg) {
@@ -232,7 +232,7 @@ const mostrarDetalleRuta = async () => {
             mapaImg.alt = `Mapa de ${ruta.nombre}`;
         }
         document.getElementById("coordenadas").textContent = `📍 ${ruta.coordenadas || "No disponible"}`;
-        
+
         // Reseñas
         const reseñasContainer = document.getElementById("reseñasContainer");
         if (reseñasContainer) {
@@ -255,16 +255,16 @@ const mostrarDetalleRuta = async () => {
                 });
             }
         }
-        
+
         // Botones de acción según sesión y favorito
         const accionesDiv = document.getElementById("acciones");
         const usuario = obtenerUsuario();
         let esFavorito = false;
-        
+
         if (usuario) {
             esFavorito = await verificarFavorito(usuario.id, id);
         }
-        
+
         if (accionesDiv) {
             if (usuario) {
                 accionesDiv.innerHTML = `
@@ -272,7 +272,7 @@ const mostrarDetalleRuta = async () => {
                     <button class="btn-accion" id="btnCompletar">✅ Marcar como completada</button>
                     <button class="btn-accion" id="btnReseña">✏️ Escribir reseña</button>
                 `;
-                
+
                 document.getElementById("btnFavorito")?.addEventListener("click", async () => {
                     const nuevoEstado = await toggleFavorito(usuario.id, id, esFavorito);
                     if (nuevoEstado) {
@@ -282,11 +282,11 @@ const mostrarDetalleRuta = async () => {
                         alert(esFavorito ? "✅ Ruta guardada en favoritos" : "❌ Ruta eliminada de favoritos");
                     }
                 });
-                
+
                 document.getElementById("btnCompletar")?.addEventListener("click", () => {
                     guardarRutaCompletada(usuario.id, id, ruta.nombre, ruta.distancia_km);
                 });
-                
+
                 document.getElementById("btnReseña")?.addEventListener("click", mostrarModalResena);
             } else {
                 accionesDiv.innerHTML = `
@@ -296,7 +296,7 @@ const mostrarDetalleRuta = async () => {
                 `;
             }
         }
-        
+
     } catch (error) {
         console.error("Error:", error);
         window.location.href = "rutas.html";
@@ -307,13 +307,13 @@ const mostrarDetalleRuta = async () => {
 const init = () => {
     actualizarHeader();
     mostrarDetalleRuta();
-    
+
     // Configurar modal
     const cerrarModalBtn = document.getElementById("cerrarModal");
     if (cerrarModalBtn) {
         cerrarModalBtn.addEventListener("click", cerrarModal);
     }
-    
+
     const enviarResenaBtn = document.getElementById("enviarResena");
     if (enviarResenaBtn) {
         enviarResenaBtn.addEventListener("click", () => {
@@ -321,18 +321,18 @@ const init = () => {
             const rutaId = obtenerIdDeURL();
             const calificacion = parseInt(document.getElementById("resenaCalificacion").value);
             const comentario = document.getElementById("resenaComentario").value.trim();
-            
+
             if (!comentario) {
                 alert("⚠️ Por favor escribe un comentario");
                 return;
             }
-            
+
             if (usuario && rutaId) {
                 guardarResena(usuario.id, rutaId, calificacion, comentario);
             }
         });
     }
-    
+
     // Cerrar modal haciendo clic fuera
     window.addEventListener("click", (e) => {
         const modal = document.getElementById("modalResena");

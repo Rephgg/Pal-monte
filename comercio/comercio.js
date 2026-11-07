@@ -10,7 +10,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html">Rutas</a>
@@ -48,17 +48,17 @@ const obtenerColorRating = (rating) => {
 const mostrarComercios = (comercios) => {
     const container = document.getElementById("cardsGrid");
     if (!container) return;
-    
+
     container.innerHTML = "";
-    
+
     if (comercios.length === 0) {
         container.innerHTML = '<p class="sin-resultados">No hay comercios en esta categoría</p>';
         return;
     }
-    
+
     comercios.forEach(comercio => {
         const colorRating = obtenerColorRating(comercio.calificacion);
-        
+
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
@@ -83,14 +83,14 @@ const cargarComercios = async (categoria = null) => {
         if (categoria && categoria !== "todos") {
             url = `${API_URL}/comercios?tipo=${categoria}`;
         }
-        
+
         const response = await fetch(url);
         const comercios = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(comercios.detail || "Error al cargar comercios");
         }
-        
+
         mostrarComercios(comercios);
     } catch (error) {
         console.error("Error:", error);

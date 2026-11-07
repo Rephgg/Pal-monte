@@ -16,7 +16,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html">Rutas</a>
@@ -53,7 +53,7 @@ const obtenerDiaMes = (fecha) => {
 };
 
 const obtenerNombreMes = (mesNumero) => {
-    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     return meses[mesNumero - 1] || "Mes";
 };
@@ -67,7 +67,7 @@ const inscribirEvento = async (usuarioId, eventoId) => {
             },
             body: JSON.stringify({ usuario_id: usuarioId })
         });
-        
+
         if (response.ok) {
             alert("✅ Te has inscrito al evento");
             window.location.reload();
@@ -89,9 +89,9 @@ const cancelarInscripcion = async (usuarioId, eventoId) => {
             },
             body: JSON.stringify({ usuario_id: usuarioId })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
             alert("✅ Has cancelado tu inscripción");
             window.location.reload();
@@ -107,60 +107,60 @@ const cancelarInscripcion = async (usuarioId, eventoId) => {
 // Mostrar detalle del evento
 const mostrarDetalleEvento = async () => {
     const id = obtenerIdDeURL();
-    
+
     if (!id) {
         window.location.href = "eventos.html";
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/eventos/${id}`);
         const evento = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(evento.detail || "Evento no encontrado");
         }
-        
+
         const { dia, mes } = obtenerDiaMes(evento.fecha);
         const nombreMes = obtenerNombreMes(mes);
         const porcentaje = (evento.cupo_actual / evento.cupo_max) * 100;
         const cuposRestantes = evento.cupo_max - evento.cupo_actual;
         const usuario = obtenerUsuario();
-        
+
         // Verificar si el usuario ya está inscrito
         let yaInscrito = false;
         if (usuario && evento.asistentes) {
             yaInscrito = evento.asistentes.some(a => a.id === usuario.id);
         }
-        
+
         // Título de la página
         document.title = `Pal' Monte - ${evento.titulo}`;
-        
+
         // Hero
         document.getElementById("eventoDia").textContent = dia;
         document.getElementById("eventoMes").textContent = nombreMes;
         document.getElementById("eventoNombre").textContent = evento.titulo;
         document.getElementById("eventoOrganizador").innerHTML = `👤 Organiza: ${evento.organizador || "Por definir"}`;
-        
+
         // Información
         document.getElementById("eventoFechaCompleta").innerHTML = `📅 ${evento.fecha} - ${evento.hora_inicio}`;
         document.getElementById("eventoLugar").innerHTML = `📍 ${evento.lugar}`;
         document.getElementById("eventoCupos").innerHTML = `${evento.cupo_actual} de ${evento.cupo_max} cupos ocupados`;
         document.getElementById("eventoDescripcion").textContent = evento.descripcion || "Sin descripción disponible";
-        
+
         // Barra de progreso
         const progresoBar = document.getElementById("cuposProgreso");
         if (progresoBar) {
             progresoBar.style.width = `${porcentaje}%`;
             progresoBar.style.backgroundColor = porcentaje >= 90 ? "#ba1a1a" : "#006768";
         }
-        
+
         const cuposRestantesSpan = document.getElementById("eventoCuposRestantes");
         if (cuposRestantesSpan) {
             cuposRestantesSpan.innerHTML = cuposRestantes > 0 ? `✅ ${cuposRestantes} cupos disponibles` : "❌ Sin cupos disponibles";
             cuposRestantesSpan.style.color = cuposRestantes > 0 ? "#006768" : "#ba1a1a";
         }
-        
+
         // Botón de inscripción
         const accionesDiv = document.getElementById("eventoAcciones");
         if (accionesDiv) {
@@ -185,7 +185,7 @@ const mostrarDetalleEvento = async () => {
                 });
             }
         }
-        
+
         // Lista de asistentes
         const asistentesDiv = document.getElementById("listaAsistentes");
         if (asistentesDiv) {
@@ -203,7 +203,7 @@ const mostrarDetalleEvento = async () => {
                 });
             }
         }
-        
+
     } catch (error) {
         console.error("Error:", error);
         window.location.href = "eventos.html";

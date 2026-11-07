@@ -1,17 +1,20 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class ResenaRequest(BaseModel):
     id_usuario: int
     id_ruta: int
     calificacion: int
     comentario: str
 
+
 class RutaRealizadaRequest(BaseModel):
     usuario_id: int
     ruta_id: int
     tiempo_real: float
     observaciones: str = ""
+
 
 class UsuarioRegistro(BaseModel):
     nombre: str
@@ -20,9 +23,11 @@ class UsuarioRegistro(BaseModel):
     telefono: str = None
     nivel: str = "principiante"
 
+
 class UsuarioLogin(BaseModel):
     email: str
     password: str
+
 
 class Ruta(BaseModel):
     nombre: str
@@ -36,6 +41,7 @@ class Ruta(BaseModel):
     elevacion: Optional[int] = None
     superficie: Optional[str] = "mixta"
 
+
 class Comercio(BaseModel):
     nombre: str
     tipo: str
@@ -43,6 +49,7 @@ class Comercio(BaseModel):
     coordenadas: Optional[str] = None
     telefono: Optional[str] = None
     horario: Optional[str] = None
+
 
 class Evento(BaseModel):
     titulo: str
@@ -52,11 +59,13 @@ class Evento(BaseModel):
     lugar: str
     cupo_max: int
 
+
 class Resena(BaseModel):
     id_ruta: Optional[int] = None
     id_comercio: Optional[int] = None
     calificacion: int
     comentario: str
+
 
 class UsuarioAdminUpdate(BaseModel):
     nombre: Optional[str] = None

@@ -26,15 +26,15 @@ const limpiarError = () => {
 const procesarLogin = async (event) => {
     event.preventDefault();
     limpiarError();
-    
+
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
-    
+
     if (!email || !password) {
         mostrarError("⚠️ Completa todos los campos");
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: "POST",
@@ -43,9 +43,9 @@ const procesarLogin = async (event) => {
             },
             body: JSON.stringify({ email, password })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
             // Guardar usuario en localStorage
             localStorage.setItem("usuario", JSON.stringify({
@@ -55,7 +55,7 @@ const procesarLogin = async (event) => {
                 nivel: data.nivel,
                 rol: data.rol
             }));
-            
+
             alert(`✅ ¡Bienvenido ${data.nombre}!`);
             window.location.href = "../main/palmonte.html";
         } else {
@@ -72,7 +72,7 @@ const configurarFormulario = () => {
     if (formLogin) {
         formLogin.addEventListener("submit", procesarLogin);
     }
-    
+
     if (emailInput) emailInput.addEventListener("input", limpiarError);
     if (passwordInput) passwordInput.addEventListener("input", limpiarError);
 };

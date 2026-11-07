@@ -1,0 +1,28 @@
+{
+  "name": "pal-monte",
+  "version": "1.0.0",
+  "description": "Aplicación web para la comunidad ciclista de Ibagué: permite explorar rutas, comercios y\r eventos, inscribirse a salidas, registrar rutas realizadas, dejar reseñas y gestionar el\r perfil de cada usuario.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rephgg/Pal-monte.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Rephgg/Pal-monte/issues"
+  },
+  "homepage": "https://github.com/Rephgg/Pal-monte#readme",
+  "devDependencies": {
+    "eslint": "^10.14.0"
+  }
+}

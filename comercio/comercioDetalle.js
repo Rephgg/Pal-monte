@@ -16,7 +16,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html">Rutas</a>
@@ -70,9 +70,9 @@ const guardarResena = async (usuarioId, comercioId, calificacion, comentario) =>
                 comentario: comentario
             })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
             alert("✅ Reseña guardada correctamente");
             cerrarModal();
@@ -92,33 +92,33 @@ const guardarResena = async (usuarioId, comercioId, calificacion, comentario) =>
 const mostrarModalResena = (comercioId) => {
     const modal = document.getElementById("modalResena");
     if (!modal) return;
-    
+
     modal.style.display = "flex";
     document.getElementById("resenaCalificacion").value = 5;
     document.getElementById("resenaComentario").value = "";
-    
+
     // Guardar referencia al botón para evitar duplicar eventos
     const btnEnviar = document.getElementById("btnEnviarResena");
     const nuevaBtnEnviar = btnEnviar.cloneNode(true);
     btnEnviar.parentNode.replaceChild(nuevaBtnEnviar, btnEnviar);
-    
+
     nuevaBtnEnviar.onclick = () => {
         const usuario = obtenerUsuario();
-        
+
         if (!usuario) {
             alert("⚠️ Debes iniciar sesión para escribir una reseña");
             window.location.href = "../sesion/iniciarSesion.html";
             return;
         }
-        
+
         const calificacion = parseInt(document.getElementById("resenaCalificacion").value);
         const comentario = document.getElementById("resenaComentario").value.trim();
-        
+
         if (!comentario) {
             alert("⚠️ Por favor escribe un comentario");
             return;
         }
-        
+
         guardarResena(usuario.id, comercioId, calificacion, comentario);
     };
 };
@@ -134,40 +134,40 @@ const cerrarModal = () => {
 // Mostrar detalle del comercio
 const mostrarDetalleComercio = async () => {
     const id = obtenerIdDeURL();
-    
+
     if (!id) {
         window.location.href = "comercio.html";
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/comercios/${id}`);
         const comercio = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(comercio.detail || "Comercio no encontrado");
         }
-        
+
         // Título de la página
         document.title = `Pal' Monte - ${comercio.nombre}`;
-        
+
         // Hero
         document.getElementById("comercioNombre").textContent = comercio.nombre;
         const verificadoTexto = comercio.verificado ? "✓ Verificado" : "";
         document.getElementById("comercioRating").innerHTML = `⭐ ${comercio.calificacion || "Nuevo"} | ${comercio.tipo} | ${verificadoTexto}`;
-        
+
         // Información de contacto
         document.getElementById("direccion").innerHTML = `📍 ${comercio.direccion || "Dirección no disponible"}`;
         document.getElementById("telefono").innerHTML = `📞 ${comercio.telefono || "No disponible"}`;
         document.getElementById("horario").innerHTML = `🕐 ${comercio.horario || "No disponible"}`;
         document.getElementById("sitioWeb").innerHTML = `🌐 ${comercio.sitio_web || "No disponible"}`;
-        
+
         // Mapa
         const mapaImg = document.getElementById("mapaImg");
         if (mapaImg) {
             mapaImg.src = comercio.foto || "https://via.placeholder.com/600x300?text=Mapa";
         }
-        
+
         // Reseñas
         const reseñasContainer = document.getElementById("reseñasContainer");
         if (reseñasContainer) {
@@ -190,11 +190,11 @@ const mostrarDetalleComercio = async () => {
                 });
             }
         }
-        
+
         // Botones de acción según sesión
         const usuario = obtenerUsuario();
         const btnEscribirReseña = document.getElementById("btnEscribirReseña");
-        
+
         if (btnEscribirReseña) {
             if (usuario) {
                 btnEscribirReseña.innerHTML = "✏️ Escribir reseña";
@@ -211,7 +211,7 @@ const mostrarDetalleComercio = async () => {
                 };
             }
         }
-        
+
         // Botón llamar
         const btnLlamar = document.getElementById("btnLlamar");
         if (btnLlamar && comercio.telefono) {
@@ -219,7 +219,7 @@ const mostrarDetalleComercio = async () => {
                 window.location.href = `tel:${comercio.telefono.replace(/[^0-9+]/g, '')}`;
             };
         }
-        
+
         // Botón mapa
         const btnMapa = document.getElementById("btnMapa");
         if (btnMapa) {
@@ -227,7 +227,7 @@ const mostrarDetalleComercio = async () => {
                 alert("Próximamente: Ver ubicación en mapa interactivo");
             };
         }
-        
+
     } catch (error) {
         console.error("Error:", error);
         window.location.href = "comercio.html";
@@ -238,13 +238,13 @@ const mostrarDetalleComercio = async () => {
 const init = () => {
     actualizarHeader();
     mostrarDetalleComercio();
-    
+
     // Configurar cierre del modal
     const cerrarModalBtn = document.getElementById("cerrarModal");
     if (cerrarModalBtn) {
         cerrarModalBtn.addEventListener("click", cerrarModal);
     }
-    
+
     window.addEventListener("click", (e) => {
         const modal = document.getElementById("modalResena");
         if (e.target === modal) {

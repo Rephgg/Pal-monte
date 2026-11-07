@@ -26,34 +26,34 @@ const validarEmail = (email) => {
 
 const procesarRegistro = async (event) => {
     event.preventDefault();
-    
+
     const nombre = document.getElementById("nombre").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
     const telefono = document.getElementById("telefono").value.trim();
     const nivel = document.getElementById("nivel").value;
-    
+
     if (!nombre || !email || !password || !confirmPassword) {
         mostrarError("⚠️ Completa todos los campos obligatorios");
         return;
     }
-    
+
     if (!validarEmail(email)) {
         mostrarError("⚠️ Ingresa un correo electrónico válido");
         return;
     }
-    
+
     if (password.length < 6) {
         mostrarError("⚠️ La contraseña debe tener al menos 6 caracteres");
         return;
     }
-    
+
     if (password !== confirmPassword) {
         mostrarError("⚠️ Las contraseñas no coinciden");
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_URL}/registro`, {
             method: "POST",
@@ -68,24 +68,24 @@ const procesarRegistro = async (event) => {
                 nivel
             })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
             mostrarExito(`✅ ¡Bienvenido ${nombre}! Cuenta creada exitosamente`);
-            
+
             // Iniciar sesión automáticamente
             const loginResponse = await fetch(`${API_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
             });
-            
+
             if (loginResponse.ok) {
                 const userData = await loginResponse.json();
                 localStorage.setItem("usuario", JSON.stringify(userData));
             }
-            
+
             setTimeout(() => {
                 window.location.href = "../main/palmonte.html";
             }, 2000);

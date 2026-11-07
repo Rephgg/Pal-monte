@@ -10,7 +10,7 @@ const obtenerUsuario = () => {
 const actualizarHeader = () => {
     const navLinks = document.getElementById("navLinks");
     const usuario = obtenerUsuario();
-    
+
     if (usuario) {
         navLinks.innerHTML = `
             <a href="../rutas/rutas.html" class="active">Rutas</a>
@@ -61,18 +61,18 @@ const obtenerTextoDificultad = (dificultad) => {
 const mostrarRutas = (rutas) => {
     const container = document.getElementById("gridRutas");
     if (!container) return;
-    
+
     container.innerHTML = "";
-    
+
     if (rutas.length === 0) {
         container.innerHTML = '<p class="sin-resultados">No hay rutas con esta dificultad</p>';
         return;
     }
-    
+
     rutas.forEach(ruta => {
         const color = obtenerColorDificultad(ruta.dificultad);
         const textoDificultad = obtenerTextoDificultad(ruta.dificultad);
-        
+
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
@@ -101,14 +101,14 @@ const cargarRutas = async (dificultad = null) => {
         if (dificultad && dificultad !== "todas") {
             url = `${API_URL}/rutas?dificultad=${dificultad}`;
         }
-        
+
         const response = await fetch(url);
         const rutas = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(rutas.detail || "Error al cargar rutas");
         }
-        
+
         mostrarRutas(rutas);
     } catch (error) {
         console.error("Error:", error);
