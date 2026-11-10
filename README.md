@@ -35,7 +35,7 @@ través de una **API REST** y una **base de datos única**:
 ```
 
 > **Nota de arquitectura actual:** el backend de producción en desarrollo es
-> **`mi-api/`** (Node.js + Express, puerto 3000), que consume las 24 tablas.
+> **`backend/`** (Node.js + Express, puerto 3000), que consume las 24 tablas.
 > El backend Python/FastAPI de este manual corresponde a la versión original
 > (EV01) con las 9 tablas base; ambos comparten el mismo `database/palmonte.sql`.
 
@@ -78,7 +78,7 @@ Por lo tanto, para ejecutar la aplicación solo hay que tener dos procesos activ
 
 ```
 PalMonte/
-├── backend/
+├── Backend-Js/
 │   ├── main.py              # API REST completa (FastAPI)
 │   ├── models.py            # Modelos de datos (Pydantic)
 │   ├── database.py          # Conexión a MySQL
@@ -111,10 +111,10 @@ PalMonte/
 
 ### 5.2. Configurar el backend
 
-1. Ve a la carpeta `backend`:
+1. Ve a la carpeta `Backend-Js` (backend Python original):
 
    ```cmd
-   cd backend
+   cd Backend-Js
    ```
 
 2. Copia el archivo `.env.example` como `.env` y ajusta las credenciales de tu MySQL

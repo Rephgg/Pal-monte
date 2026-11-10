@@ -1,5 +1,5 @@
 {
-  "name": "mi-api",
+  "name": "backend",
   "version": "1.0.0",
   "description": "API REST Pal' Monte en Node.js (Express + MySQL)",
   "main": "index.js",

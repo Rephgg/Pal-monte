@@ -25,7 +25,7 @@ if %errorlevel%==0 (
 
 REM [2/3] Levantar la API
 echo [2/3] Levantando la API en http://127.0.0.1:8000 ...
-cd /d "%~dp0backend"
+cd /d "%~dp0Backend-Js"
 
 set "PYEXE=venv\Scripts\python.exe"
 if not exist "%PYEXE%" set "PYEXE=python"

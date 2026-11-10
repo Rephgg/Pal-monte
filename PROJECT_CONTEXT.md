@@ -13,7 +13,7 @@ Evidencias SENA ADSO: `GA8-220501096-AA1-EV01` (web), `AA2-EV02` (APK) y
 
 | Artifact | Ruta local | Repo Git |
 |---|---|---|
-| Proyecto web + `mi-api` (Node/Express) + BD | `C:\Users\braya\Downloads\PalMonte github\Pal-monte` | `https://github.com/Rephgg/Pal-monte.git` (ramas `main`, `Dev`, `BrayanRincon` — sincronizadas) |
+| Proyecto web + `backend` (Node/Express) + BD | `C:\Users\braya\Downloads\PalMonte github\Pal-monte` | `https://github.com/Rephgg/Pal-monte.git` (ramas `main`, `Dev`, `BrayanRincon` — sincronizadas) |
 | Proyecto móvil Android (Compose) | `D:\Android\AppPedalea` | (código fuente local) |
 | Ejecutable APK (Android) | `apk/laboratorio/PalMonte_AppPedalea.apk` (en repo) | — |
 
@@ -26,7 +26,7 @@ Evidencias SENA ADSO: `GA8-220501096-AA1-EV01` (web), `AA2-EV02` (APK) y
 
 ```
 Navegador (frontend estático HTML/JS/CSS)
-  --fetch JSON--> http://127.0.0.1:3000/api   (mi-api: Node.js + Express)   <-- backend activo
+  --fetch JSON--> http://127.0.0.1:3000/api   (backend: Node.js + Express)   <-- backend activo
   --fetch JSON--> http://127.0.0.1:8000/api   (legacy: FastAPI + Uvicorn)
                                 |
                                 | mysql2 (pool)
@@ -34,7 +34,7 @@ Navegador (frontend estático HTML/JS/CSS)
                MySQL (servicio Windows, puerto 3306) — DB: palmonte (24 tablas)
 ```
 
-- **Backend activo: `mi-api/`** (Node.js + Express + `mysql2` pool). Se trabaja
+- **Backend activo: `backend/`** (Node.js + Express + `mysql2` pool). Se trabaja
   "profesionalmente" sobre este: base de datos ampliada de 9 a 24 tablas,
   login con sesiones (`token`), endpoints por módulo.
 - **Backend legacy:** Python 3.14 + FastAPI + Uvicorn (port 8000). Sigue
@@ -42,19 +42,19 @@ Navegador (frontend estático HTML/JS/CSS)
 - Frontend: HTML + CSS + JS puro. Se abre directamente (`file://.../...html`).
 - **No se usa XAMPP**: MySQL es servicio Windows.
 
-### 2.1 `mi-api` (Node.js + Express)
+### 2.1 `backend` (Node.js + Express)
 
-- `mi-api/index.js` → `src/app.js` → routers y controllers.
-- `mi-api/src/db.js` — pool `mysql2` (lee `.env`: `DB_HOST`, `DB_PORT`, `DB_USER`,
+- `backend/index.js` → `src/app.js` → routers y controllers.
+- `backend/src/config/db.js` — pool `mysql2` (lee `.env`: `DB_HOST`, `DB_PORT`, `DB_USER`,
   `DB_PASSWORD`, `DB_NAME`, `DB_POOL_LIMIT`). Verifica conexión al arranque.
-- `mi-api/.env.example` — plantilla (copiar a `.env`).
-- Arranque: `cd mi-api && npm install` → `npm run dev` (nodemon) o
+- `backend/.env.example` — plantilla (copiar a `.env`).
+- Arranque: `cd backend && npm install` → `npm run dev` (nodemon) o
   `node index.js`. Bat disponibles: `dev.bat`, `start-api.bat`.
 
 ### 2.2 Estate del backend legacy (FastAPI)
 
-- `backend/main.py` — API REST con `init_database()` (9 tablas originales).
-- `backend/models.py`, `backend/database.py`, `.env`, `.env.example`.
+- `Backend-Js/main.py` — API REST con `init_database()` (9 tablas originales).
+- `Backend-Js/models.py`, `Backend-Js/database.py`, `.env`, `.env.example`.
 - Arranque: `venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000`.
 
 ### 2.3 Archivos clave del frontend (EV01)
@@ -109,7 +109,7 @@ Todas las contraseñas son **`123456`**:
 
 ---
 
-## 4. API REST activa — `mi-api` (`http://127.0.0.1:3000/api`)
+## 4. API REST activa — `backend` (`http://127.0.0.1:3000/api`)
 
 | Módulo | Endpoints |
 |---|---|
@@ -138,9 +138,9 @@ Todas las contraseñas son **`123456`**:
 
 1. Servicio MySQL arriba (Running). Si no: `net start MySQL` (admin).
 2. Importar BD (una sola vez): `mysql -u root palmonte < database\palmonte.sql`.
-3. Backend activo (`mi-api`):
+3. Backend activo (`backend`):
    ```cmd
-   cd mi-api
+   cd backend
    npm install
    npm run dev        :: o: node index.js  (o doble clic en dev.bat / start-api.bat)
    ```
@@ -197,7 +197,7 @@ Web + API (EV01):
 - [x] Base de datos ampliada a 24 tablas (módulos: sesiones, bicicletas,
       geometría de rutas, social, notificaciones, logros, patrocinadores,
       reportes, horarios) con FKs, índices, CHECKs y datos demo
-- [x] `mi-api` (Express): 16 módulos de endpoints cableados en `app.js`
+- [x] `backend` (Express): 16 módulos de endpoints cableados en `app.js`
 - [x] Login con sesión (`sesion`) y devolución de `token`
 - [x] Revisión lógica de BD: duplicados de reseña protegidos (UNIQUE),
       cupos de evento validados (CHECK), promedio de comercio sincronizado
@@ -225,12 +225,12 @@ Android (EV02/EV03):
 :: Importar BD
 mysql -u root palmonte < database\palmonte.sql
 
-:: Backend activo (mi-api)
-cd mi-api && npm install && npm run dev
-:: (alternativa: doble clic en mi-api\dev.bat o mi-api\start-api.bat)
+:: Backend activo (backend)
+cd backend && npm install && npm run dev
+:: (alternativa: doble clic en backend\dev.bat o backend\start-api.bat)
 
 :: Backend legacy (FastAPI)
-D:\U\ProgWeb\PalMonte\backend> venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
+D:\U\ProgWeb\PalMonte\Backend-Js> venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 
 :: Android: compilar APK debug
 D:\Android\AppPedalea> gradlew.bat :app:assembleDebug

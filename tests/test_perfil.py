@@ -53,3 +53,18 @@ class TestPerfil:
     def test_perfil_contiene_historial(self, api, usuario_demo):
         resp = api.get(f"/api/perfil/{usuario_demo['id']}")
         assert isinstance(resp.json()["historial"], list)
+
+    def test_perfil_contiene_foto(self, api, usuario_demo):
+        resp = api.get(f"/api/perfil/{usuario_demo['id']}")
+        assert "foto" in resp.json()
+
+    def test_actualizar_foto_perfil(self, api, usuario_test):
+        resp = api.put(
+            f"/api/perfil/{usuario_test['id']}",
+            params={"nombre": "Test User", "foto": "mi_avatar.png"}
+        )
+        assert resp.status_code == 200
+        assert "actualizado" in resp.json()["message"].lower()
+
+        resp_perfil = api.get(f"/api/perfil/{usuario_test['id']}")
+        assert resp_perfil.json()["foto"] == "mi_avatar.png"

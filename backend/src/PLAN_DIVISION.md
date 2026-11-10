@@ -1,12 +1,12 @@
 # División del trabajo en equipo (3 miembros)
 
-Repositorio: `mi-api/`. Cada miembro trabaja sobre sus propios archivos (`controller` + `routes`)
+Repositorio: `backend/` (antes `mi-api/`). Cada miembro trabaja sobre sus propios archivos (`controller` + `routes`)
 y los sube a git por separado. El proyecto se conecta a la base de datos **MySQL `palmonte`**
 existente (misma que usa el backend FastAPI).
 
 ## Requisitos previos (todos)
 ```bash
-cd mi-api
+cd backend
 npm init -y
 npm install express dotenv mysql2
 npm install -D nodemon
@@ -101,7 +101,7 @@ Cada miembro hace su commit y push de sus propios archivos:
 
 ```bash
 git add src/controllers/mi_archivo.controller.js src/routes/mi_archivo.routes.js
-git commit -m "feat(mi-api): endpoints de <sección>"
+git commit -m "feat(backend): endpoints de <sección>"
 git push origin <rama>
 ```
 
