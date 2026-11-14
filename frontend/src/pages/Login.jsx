@@ -27,6 +27,7 @@ export default function Login() {
 
   return (
     <div className="auth-page">
+      <Link to="/" className="logo">Pal' Monte</Link>
       <form onSubmit={onSubmit} className="auth-form">
         <h1>Iniciar sesión</h1>
         {error && <p className="error">{error}</p>}
