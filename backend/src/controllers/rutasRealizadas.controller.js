@@ -29,13 +29,23 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// POST /api/rutas-realizadas?usuario_id=&ruta_id=&tiempo_real=&observaciones=
+// POST /api/rutas-realizadas
 const create = async (req, res) => {
   try {
-    const { usuario_id, ruta_id, tiempo_real, observaciones = null } = req.query;
+    const { usuario_id, ruta_id, tiempo_real, observaciones = null } = req.body;
 
     if (!usuario_id || !ruta_id || tiempo_real === undefined) {
       return res.status(400).json({ ok: false, msg: 'usuario_id, ruta_id y tiempo_real son requeridos' });
+    }
+
+    const [usuarioExiste] = await pool.query('SELECT id FROM usuario WHERE id = ?', [usuario_id]);
+    if (usuarioExiste.length === 0) {
+      return res.status(400).json({ ok: false, msg: 'El usuario no existe' });
+    }
+
+    const [rutaExiste] = await pool.query('SELECT id FROM ruta WHERE id = ?', [ruta_id]);
+    if (rutaExiste.length === 0) {
+      return res.status(400).json({ ok: false, msg: 'La ruta no existe' });
     }
 
     const [yaHoy] = await pool.query(
