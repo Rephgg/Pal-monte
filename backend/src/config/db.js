@@ -2,11 +2,15 @@ const fs = require('fs');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const sslConfig = process.env.DB_SSL_CA
-  ? { ca: fs.readFileSync(process.env.DB_SSL_CA) }
-  : process.env.DB_SSL === 'true'
-    ? { rejectUnauthorized: false }
-    : false;
+let sslConfig = false;
+if (process.env.DB_SSL_CA) {
+  const caPath = process.env.DB_SSL_CA.startsWith('/')
+    ? process.env.DB_SSL_CA
+    : require('path').resolve(process.env.DB_SSL_CA);
+  sslConfig = { ca: fs.readFileSync(caPath) };
+} else if (process.env.DB_SSL === 'true') {
+  sslConfig = { rejectUnauthorized: false };
+}
 
 // createPool: reutiliza conexiones automaticamente
 const pool = mysql.createPool({
