@@ -1,5 +1,12 @@
+const fs = require('fs');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
+
+const sslConfig = process.env.DB_SSL_CA
+  ? { ca: fs.readFileSync(process.env.DB_SSL_CA) }
+  : process.env.DB_SSL === 'true'
+    ? { rejectUnauthorized: false }
+    : false;
 
 // createPool: reutiliza conexiones automaticamente
 const pool = mysql.createPool({
@@ -11,6 +18,7 @@ const pool = mysql.createPool({
   charset:  'utf8mb4',
   connectionLimit: process.env.DB_POOL_LIMIT || 10,
   waitForConnections: true,
+  ssl: sslConfig,
 });
 
 // Verificar conexion al iniciar
