@@ -1,19 +1,8 @@
-/**
- * ==============================================
- * MIEMBRO 2 — PARTE 2: COMERCIOS
- * Endpoints:
- *  - GET    /api/comercios (?tipo=)
- *  - GET    /api/comercios/:comercio_id
- *  - POST   /api/admin/comercios
- *  - PUT    /api/admin/comercios/:comercio_id
- *  - DELETE /api/admin/comercios/:comercio_id
- * ==============================================
- */
+
 const pool = require('../config/db');
 
 const COLUMNS = `id, nombre, tipo, direccion, coordenadas, telefono, horario, foto, calificacion`;
 
-// GET /api/comercios
 const getAll = async (req, res) => {
   try {
     const { tipo } = req.query;
@@ -31,7 +20,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// GET /api/comercios/:comercio_id
 const getById = async (req, res) => {
   try {
     const { comercio_id } = req.params;
@@ -59,7 +47,6 @@ const getById = async (req, res) => {
   }
 };
 
-// POST /api/admin/comercios
 const create = async (req, res) => {
   try {
     const { nombre, tipo, direccion, coordenadas, telefono, horario } = req.body || {};
@@ -80,7 +67,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/admin/comercios/:comercio_id
 const update = async (req, res) => {
   try {
     const { comercio_id } = req.params;
@@ -102,7 +88,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/comercios/:comercio_id
 const remove = async (req, res) => {
   try {
     const { comercio_id } = req.params;

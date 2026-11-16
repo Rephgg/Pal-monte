@@ -1,17 +1,6 @@
-/**
- * ==============================================
- * BICICLETAS
- * Endpoints:
- *  - GET    /api/bicicletas?usuario_id=
- *  - GET    /api/bicicletas/:bicicleta_id
- *  - POST   /api/bicicletas
- *  - PUT    /api/bicicletas/:bicicleta_id
- *  - DELETE /api/bicicletas/:bicicleta_id
- * ==============================================
- */
+
 const bicicletas = require('../models/bicicletas.model');
 
-// GET /api/bicicletas?usuario_id=
 const getByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -24,7 +13,6 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// GET /api/bicicletas/:bicicleta_id
 const getById = async (req, res) => {
   try {
     const { bicicleta_id } = req.params;
@@ -37,7 +25,6 @@ const getById = async (req, res) => {
   }
 };
 
-// POST /api/bicicletas
 const create = async (req, res) => {
   try {
     const { id_usuario, marca = null, modelo = null, tipo_bici = null, rodada = null, color = null, foto } = req.body || {};
@@ -50,7 +37,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/bicicletas/:bicicleta_id
 const update = async (req, res) => {
   try {
     const { bicicleta_id } = req.params;
@@ -63,7 +49,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/bicicletas/:bicicleta_id
 const remove = async (req, res) => {
   try {
     const { bicicleta_id } = req.params;

@@ -3,13 +3,11 @@ const router = express.Router();
 const ctrl = require('../controllers/comercios.controller');
 const { soloAdmin } = require('../middlewares/authMiddleware');
 
-// COMERCIOS (público)
-router.get('/comercios', ctrl.getAll);                    // GET    /api/comercios?tipo=
-router.get('/comercios/:comercio_id', ctrl.getById);      // GET    /api/comercios/:id
+router.get('/comercios', ctrl.getAll);                    
+router.get('/comercios/:comercio_id', ctrl.getById);      
 
-// ADMIN - COMERCIOS (token + rol administrador)
-router.post('/admin/comercios', ...soloAdmin, ctrl.create);             // POST   /api/admin/comercios
-router.put('/admin/comercios/:comercio_id', ...soloAdmin, ctrl.update); // PUT    /api/admin/comercios/:id
-router.delete('/admin/comercios/:comercio_id', ...soloAdmin, ctrl.remove); // DELETE /api/admin/comercios/:id
+router.post('/admin/comercios', ...soloAdmin, ctrl.create);             
+router.put('/admin/comercios/:comercio_id', ...soloAdmin, ctrl.update); 
+router.delete('/admin/comercios/:comercio_id', ...soloAdmin, ctrl.remove); 
 
 module.exports = router;

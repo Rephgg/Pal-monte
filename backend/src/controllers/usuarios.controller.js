@@ -1,24 +1,9 @@
-/**
- * ==============================================
- * MIEMBRO 1 — USUARIOS, PERFIL Y AUTENTICACIÓN
- * Endpoints:
- *  - POST   /api/registro
- *  - POST   /api/login
- *  - GET    /api/perfil/:usuario_id
- *  - PUT    /api/perfil/:usuario_id
- *  - PUT    /api/perfil/:usuario_id/password
- *  - GET    /api/admin/usuarios
- *  - PUT    /api/admin/usuarios/:usuario_id/rol
- *  - PUT    /api/admin/usuarios/:usuario_id
- *  - DELETE /api/admin/usuarios/:usuario_id
- * ==============================================
- */
+
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 
-/** Genera un JWT firmado con la clave del .env */
 const firmarToken = (usuario) =>
   jwt.sign(
     { id: usuario.id, email: usuario.email, rol: usuario.rol },
@@ -26,7 +11,6 @@ const firmarToken = (usuario) =>
     { expiresIn: process.env.JWT_EXPIRES_IN }
   );
 
-// POST /api/registro
 const registro = async (req, res) => {
   try {
     const { nombre, email, password, telefono = null, nivel = 'principiante' } = req.body || {};
@@ -58,7 +42,6 @@ const registro = async (req, res) => {
   }
 };
 
-// POST /api/login
 const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -79,7 +62,7 @@ const login = async (req, res) => {
 
     const u = rows[0];
 
-    // Crear sesión (token) para el login
+    
     const token = crypto.randomBytes(32).toString('hex');
     const expira = new Date(Date.now() + 8 * 3600 * 1000);
     await pool.query(
@@ -95,7 +78,6 @@ const login = async (req, res) => {
   }
 };
 
-// GET /api/perfil/:usuario_id
 const getPerfil = async (req, res) => {
   try {
     const { usuario_id } = req.params;
@@ -132,7 +114,6 @@ const getPerfil = async (req, res) => {
   }
 };
 
-// PUT /api/perfil/:usuario_id
 const updatePerfil = async (req, res) => {
   try {
     const { usuario_id } = req.params;
@@ -157,7 +138,6 @@ const updatePerfil = async (req, res) => {
   }
 };
 
-// PUT /api/perfil/:usuario_id/password
 const updatePassword = async (req, res) => {
   try {
     const { usuario_id } = req.params;
@@ -185,7 +165,6 @@ const updatePassword = async (req, res) => {
   }
 };
 
-// GET /api/admin/usuarios
 const getAllUsuarios = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -199,7 +178,6 @@ const getAllUsuarios = async (req, res) => {
   }
 };
 
-// PUT /api/admin/usuarios/:usuario_id/rol
 const updateRol = async (req, res) => {
   try {
     const { usuario_id } = req.params;
@@ -216,7 +194,6 @@ const updateRol = async (req, res) => {
   }
 };
 
-// PUT /api/admin/usuarios/:usuario_id
 const updateUsuarioAdmin = async (req, res) => {
   try {
     const { usuario_id } = req.params;
@@ -256,7 +233,6 @@ const updateUsuarioAdmin = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/usuarios/:usuario_id  (desactiva)
 const deleteUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.params;

@@ -1,10 +1,5 @@
-/**
- * Model RESEÑAS (tabla `resena`)
- * Una reseña es de ruta O de comercio (check chk_resena_tipo).
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const findByUsuarioRuta = async (id_usuario, id_ruta) => {
   const [rows] = await pool.query(
@@ -43,7 +38,7 @@ const update = async (id, { calificacion, comentario }) => {
     'UPDATE resena SET calificacion = ?, comentario = ? WHERE id = ?',
     [calificacion, comentario, id]
   );
-  return result.affectedRows; // 0 si no existe
+  return result.affectedRows; 
 };
 
 const remove = async (id) => {

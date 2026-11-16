@@ -1,0 +1,113 @@
+###############################################################################
+# PRUEBAS DE LA API PalMonte (backend)  --  Extensión "REST Client" de VS Code
+#
+# 1. Instala la extension "REST Client" (autor: Huachao Mao).
+# 2. Levanta el backend:  cd backend ; npm run dev
+#    (debe decir: "Servidor en puerto 3000")
+# 3. Pasa el mouse sobre cada "###" y pulsa "Send Request".
+#
+# Las variables @baseUrl son gratis aqui (no es Thunder Client).
+# El token se toma automaticamente del login con {{login.response.body.token}}
+# =============================================================
+
+@baseUrl = http://localhost:3000/api
+
+### 1) REGISTRO (público) — crea un ciclista nuevo
+# @name registro
+POST {{baseUrl}}/registro
+Content-Type: application/json
+
+{
+  "nombre": "Juan Prueba",
+  "email": "juan.prueba@example.com",
+  "password": "123456",
+  "telefono": "3001234567",
+  "nivel": "principiante"
+}
+
+### 2) LOGIN (público) — el token de esta respuesta se reutiliza abajo
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "pedro@email.com",
+  "password": "123456"
+}
+
+### 3) RUTAS (público, sin token)
+GET {{baseUrl}}/rutas
+
+### 4) RUTAS con filtro por dificultad (público)
+GET {{baseUrl}}/rutas?dificultad=media
+
+### 5) RUTA por id (público)
+GET {{baseUrl}}/rutas/1
+
+### 6) COMERCIOS (público)
+GET {{baseUrl}}/comercios
+
+### 7) EVENTOS (público)
+GET {{baseUrl}}/eventos
+
+### 8) PERFIL (requiere token) — usa el token del login
+GET {{baseUrl}}/perfil/1
+Authorization: Bearer {{login.response.body.token}}
+
+### 9) ACTUALIZAR PERFIL (requiere token)
+PUT {{baseUrl}}/perfil/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+  "nombre": "Pedro Actualizado",
+  "telefono": "3009999999",
+  "nivel": "intermedio"
+}
+
+### 10) FAVORITOS: listar (requiere token)
+GET {{baseUrl}}/favoritos?usuario_id=1
+Authorization: Bearer {{login.response.body.token}}
+
+### 11) FAVORITOS: agregar (requiere token)
+POST {{baseUrl}}/favoritos?usuario_id=1&ruta_id=1
+Authorization: Bearer {{login.response.body.token}}
+
+### 12) ADMIN — crear ruta (requiere token + rol administrador)
+POST {{baseUrl}}/admin/rutas
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+  "nombre": "Ruta prueba Thunder",
+  "distancia_km": 15.5,
+  "dificultad": "media",
+  "zona": "Ibagué"
+}
+
+### 13) ADMIN — actualizar ruta
+PUT {{baseUrl}}/admin/rutas/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{
+  "nombre": "Ruta editada",
+  "distancia_km": 20,
+  "dificultad": "alta",
+  "zona": "Ibagué"
+}
+
+### 14) ADMIN — listar usuarios (requiere admin)
+GET {{baseUrl}}/admin/usuarios
+Authorization: Bearer {{login.response.body.token}}
+
+### 15) ADMIN — eliminar ruta (requiere admin)
+DELETE {{baseUrl}}/admin/rutas/1
+Authorization: Bearer {{login.response.body.token}}
+
+### 16) PRUEBA SIN TOKEN (debe dar 401)
+GET {{baseUrl}}/perfil/1
+
+### 17) PRUEBA CON TOKEN FALSO (debe dar 403)
+GET {{baseUrl}}/perfil/1
+Authorization: Bearer token.invalido.123

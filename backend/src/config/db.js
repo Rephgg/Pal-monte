@@ -12,7 +12,6 @@ if (process.env.DB_SSL_CA) {
   sslConfig = { rejectUnauthorized: false };
 }
 
-// createPool: reutiliza conexiones automaticamente
 const pool = mysql.createPool({
   host:     process.env.DB_HOST,
   port:     process.env.DB_PORT,
@@ -25,11 +24,10 @@ const pool = mysql.createPool({
   ssl: sslConfig,
 });
 
-// Verificar conexion al iniciar
 pool.getConnection()
   .then(conn => {
     console.log('MySQL conectado');
-    conn.release(); // devolver al pool
+    conn.release(); 
   })
   .catch(err => {
     console.warn('AVISO MySQL no disponible:', err.message);

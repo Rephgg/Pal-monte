@@ -1,18 +1,6 @@
-/**
- * ==============================================
- * NOTIFICACIONES
- * Endpoints:
- *  - GET    /api/notificaciones?usuario_id=
- *  - GET    /api/notificaciones/no-leidas?usuario_id=
- *  - POST   /api/notificaciones
- *  - PUT    /api/notificaciones/:notificacion_id/leida
- *  - PUT    /api/notificaciones/leidas?usuario_id=
- *  - DELETE /api/notificaciones/:notificacion_id
- * ==============================================
- */
+
 const notificaciones = require('../models/notificaciones.model');
 
-// GET /api/notificaciones?usuario_id=
 const getByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -25,7 +13,6 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// GET /api/notificaciones/no-leidas?usuario_id=
 const getNoLeidas = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -38,7 +25,6 @@ const getNoLeidas = async (req, res) => {
   }
 };
 
-// POST /api/notificaciones
 const create = async (req, res) => {
   try {
     const { id_usuario, tipo, texto, id_referencia = null } = req.body || {};
@@ -53,7 +39,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/notificaciones/:notificacion_id/leida
 const marcarLeida = async (req, res) => {
   try {
     const { notificacion_id } = req.params;
@@ -66,7 +51,6 @@ const marcarLeida = async (req, res) => {
   }
 };
 
-// PUT /api/notificaciones/leidas?usuario_id=
 const marcarTodasLeidas = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -79,7 +63,6 @@ const marcarTodasLeidas = async (req, res) => {
   }
 };
 
-// DELETE /api/notificaciones/:notificacion_id
 const remove = async (req, res) => {
   try {
     const { notificacion_id } = req.params;

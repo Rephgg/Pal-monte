@@ -1,9 +1,5 @@
-/**
- * Model RUTA (tabla `ruta`)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, nombre, descripcion, distancia_km, dificultad, tipo_bici,
                  tiempo_estimado, coordenadas, zona, elevacion, superficie, imagen`;
@@ -27,7 +23,7 @@ const getById = async (id) => {
     `SELECT ${COLUMNS} FROM ruta WHERE id = ?`,
     [id]
   );
-  return rows[0]; // undefined si no existe
+  return rows[0]; 
 };
 
 const getResenasByRuta = async (ruta_id) => {
@@ -64,7 +60,7 @@ const update = async (id, { nombre, descripcion, distancia_km, dificultad, tipo_
      WHERE id=?`,
     [nombre, descripcion, distancia_km, dificultad, tipo_bici, tiempo_estimado, coordenadas, zona, elevacion, superficie, id]
   );
-  return result.affectedRows; // 0 si no existe
+  return result.affectedRows; 
 };
 
 const remove = async (id) => {

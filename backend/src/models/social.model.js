@@ -1,10 +1,5 @@
-/**
- * Model SOCIAL (tablas `seguidor`, `publicacion`, `comentario`, `me_gusta`)
- * Comunidad: seguimiento entre ciclistas, publicaciones, comentarios y me gusta.
- */
-const pool = require('../config/db');
 
-/* ---------------- SEGUIDORES ---------------- */
+const pool = require('../config/db');
 
 const seguir = async (id_seguidor, id_seguido) => {
   const [result] = await pool.query(
@@ -41,8 +36,6 @@ const seguidoresByUsuario = async (id_usuario) => {
   );
   return rows;
 };
-
-/* ---------------- PUBLICACIONES ---------------- */
 
 const getAllPublicaciones = async () => {
   const [rows] = await pool.query(
@@ -83,8 +76,6 @@ const removePublicacion = async (id) => {
   return result.affectedRows;
 };
 
-/* ---------------- COMENTARIOS ---------------- */
-
 const comentariosByPublicacion = async (id_publicacion) => {
   const [rows] = await pool.query(
     `SELECT c.id, c.id_publicacion, c.id_usuario, u.nombre AS autor, c.texto, c.fecha
@@ -107,8 +98,6 @@ const removeComentario = async (id) => {
   const [result] = await pool.query('DELETE FROM comentario WHERE id = ?', [id]);
   return result.affectedRows;
 };
-
-/* ---------------- ME GUSTA ---------------- */
 
 const darMeGusta = async (id_publicacion, id_usuario) => {
   const [result] = await pool.query(

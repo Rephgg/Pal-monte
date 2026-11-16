@@ -58,7 +58,7 @@ export default function RutaDetalle() {
       if (!mounted) return;
       setEsFavorito(Array.isArray(favs) && favs.some((f) => f.id == ruta_id));
     } catch {
-      // silencioso
+      
     }
   };
 

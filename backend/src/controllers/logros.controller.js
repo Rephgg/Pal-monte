@@ -1,18 +1,6 @@
-/**
- * ==============================================
- * LOGROS Y LOGROS DEL USUARIO
- * Endpoints:
- *  - GET    /api/logros
- *  - POST   /api/admin/logros
- *  - PUT    /api/admin/logros/:logro_id
- *  - DELETE /api/admin/logros/:logro_id
- *  - GET    /api/logros-usuario?usuario_id=
- *  - POST   /api/logros-usuario
- * ==============================================
- */
+
 const logros = require('../models/logros.model');
 
-// GET /api/logros
 const getAll = async (req, res) => {
   try {
     const rows = await logros.getAll();
@@ -22,7 +10,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// POST /api/admin/logros
 const create = async (req, res) => {
   try {
     const { nombre, descripcion = null, tipo_criterio = 'km', valor_requerido = 0, icono } = req.body || {};
@@ -38,7 +25,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/admin/logros/:logro_id
 const update = async (req, res) => {
   try {
     const { logro_id } = req.params;
@@ -51,7 +37,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/logros/:logro_id
 const remove = async (req, res) => {
   try {
     const { logro_id } = req.params;
@@ -64,7 +49,6 @@ const remove = async (req, res) => {
   }
 };
 
-// GET /api/logros-usuario?usuario_id=
 const getLogrosByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -77,7 +61,6 @@ const getLogrosByUsuario = async (req, res) => {
   }
 };
 
-// POST /api/logros-usuario
 const desbloquear = async (req, res) => {
   try {
     const { id_usuario, id_logro } = req.body || {};

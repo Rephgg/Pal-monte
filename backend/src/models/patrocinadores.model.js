@@ -1,10 +1,5 @@
-/**
- * Model PATROCINADORES (tablas `patrocinador` y `patrocinador_evento`)
- * Empresas patrocinadoras y su relación N:M con eventos.
- */
-const pool = require('../config/db');
 
-/* ---------------- PATROCINADORES ---------------- */
+const pool = require('../config/db');
 
 const getAll = async () => {
   const [rows] = await pool.query('SELECT * FROM patrocinador ORDER BY id');
@@ -36,8 +31,6 @@ const remove = async (id) => {
   const [result] = await pool.query('DELETE FROM patrocinador WHERE id = ?', [id]);
   return result.affectedRows;
 };
-
-/* ---------------- PATROCINADORES POR EVENTO ---------------- */
 
 const byEvento = async (id_evento) => {
   const [rows] = await pool.query(

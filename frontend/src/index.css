@@ -62,7 +62,6 @@ input, select, textarea {
   font-size: 1rem;
 }
 
-/* Botones */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -124,7 +123,6 @@ input, select, textarea {
   background: #b71c1c;
 }
 
-/* Layout */
 .app {
   display: flex;
   flex-direction: column;
@@ -201,7 +199,6 @@ input, select, textarea {
   text-align: center;
 }
 
-/* Home */
 .home {
   text-align: center;
   padding: 60px 20px;
@@ -260,7 +257,6 @@ input, select, textarea {
   display: inline-block;
 }
 
-/* CTA */
 .cta {
   text-align: center;
   padding: 50px 20px;
@@ -289,7 +285,6 @@ input, select, textarea {
   flex-wrap: wrap;
 }
 
-/* Auth pages */
 .auth-page {
   display: flex;
   flex-direction: column;
@@ -369,7 +364,6 @@ input, select, textarea {
   font-size: 0.9rem;
 }
 
-/* Dashboard */
 .dashboard {
   max-width: 1000px;
   margin: 0 auto;
@@ -535,7 +529,6 @@ input, select, textarea {
   margin: 0;
 }
 
-/* Perfil */
 .perfil {
   max-width: 700px;
   margin: 0 auto;
@@ -673,7 +666,6 @@ input, select, textarea {
   border-color: #ffcdd2;
 }
 
-/* Loading */
 .loading {
   display: flex;
   justify-content: center;
@@ -682,7 +674,6 @@ input, select, textarea {
   color: var(--text-muted);
 }
 
-/* Rutas */
 .rutas {
   max-width: 1000px;
   margin: 0 auto;
@@ -797,7 +788,6 @@ input, select, textarea {
   font-size: 0.82rem;
 }
 
-/* Ruta detalle */
 .ruta-detalle {
   max-width: 900px;
   margin: 0 auto;
@@ -917,7 +907,6 @@ input, select, textarea {
   font-size: 0.95rem;
 }
 
-/* Eventos */
 .eventos {
   max-width: 1000px;
   margin: 0 auto;
@@ -992,7 +981,6 @@ input, select, textarea {
   margin-top: auto;
 }
 
-/* Evento detalle */
 .evento-detalle {
   max-width: 700px;
   margin: 0 auto;
@@ -1048,7 +1036,6 @@ input, select, textarea {
   font-size: 0.9rem;
 }
 
-/* Comercios */
 .comercios {
   max-width: 1000px;
   margin: 0 auto;
@@ -1152,7 +1139,6 @@ input, select, textarea {
   margin-top: auto;
 }
 
-/* Comercio detalle */
 .comercio-detalle {
   max-width: 700px;
   margin: 0 auto;
@@ -1212,7 +1198,6 @@ input, select, textarea {
   border-bottom: 2px solid var(--border);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .main-content {
     padding: 20px 16px;

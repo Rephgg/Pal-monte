@@ -1,9 +1,5 @@
-/**
- * Model EVENTOS (tablas `evento` y `asistencia_evento`)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, titulo, descripcion, fecha, hora_inicio, lugar, cupo_max, cupo_actual, cancelado`;
 
@@ -32,7 +28,7 @@ const getById = async (id) => {
      WHERE e.id = ?`,
     [id]
   );
-  return rows[0]; // undefined si no existe
+  return rows[0]; 
 };
 
 const getAsistentes = async (evento_id) => {
