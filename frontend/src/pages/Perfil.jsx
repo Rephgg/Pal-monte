@@ -26,8 +26,7 @@ export default function Perfil() {
   // Cargar datos del perfil
   useEffect(() => {
     if (user?.id) {
-      getPerfil(user.id).then((res) => {
-        const data = res.data?.data || res.data;
+      getPerfil(user.id).then((data) => {
         setFormInfo({
           nombre: data.nombre || '',
           email: data.email || '',
@@ -86,8 +85,32 @@ export default function Perfil() {
   return (
     <div className="perfil">
       <header className="perfil-header">
+        <div className="perfil-avatar">
+          {user?.foto ? (
+            <img src={user.foto} alt={user.nombre} />
+          ) : (
+            user?.nombre?.charAt(0).toUpperCase() || 'U'
+          )}
+        </div>
         <h1>Mi Perfil</h1>
       </header>
+
+      <div className="perfil-summary">
+        <div className="summary-card">
+          <span className="summary-icon">🚴</span>
+          <div>
+            <p className="summary-value">{user?.nivel || 'principiante'}</p>
+            <p className="summary-label">Nivel ciclista</p>
+          </div>
+        </div>
+        <div className="summary-card">
+          <span className="summary-icon">❤️</span>
+          <div>
+            <p className="summary-value">0</p>
+            <p className="summary-label">Rutas favoritas</p>
+          </div>
+        </div>
+      </div>
 
       <nav className="perfil-tabs">
         <button

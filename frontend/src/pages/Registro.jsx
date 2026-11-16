@@ -32,6 +32,7 @@ export default function Registro() {
 
   return (
     <div className="auth-page">
+      <Link to="/" className="logo">Pal' Monte</Link>
       <form onSubmit={onSubmit} className="auth-form">
         <h1>Crear cuenta</h1>
         {error && <p className="error">{error}</p>}

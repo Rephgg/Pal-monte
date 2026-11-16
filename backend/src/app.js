@@ -8,6 +8,7 @@ const { loggerMiddleware } = require('./middlewares/loggerMiddleware');
 const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // =====================================================
 // MIDDLEWARES GLOBALES
@@ -15,8 +16,17 @@ const app = express();
 // de llegar a cualquier ruta.
 // =====================================================
 
-// 1. CORS: permite que el frontend (otra IP/puerto) consuma la API
-app.use(cors());
+// 1. CORS: permite que el frontend consuma la API (origen dinámico desde FRONTEND_URL)
+const allowedOrigin = process.env.FRONTEND_URL;
+app.use(cors({
+  origin: allowedOrigin,
+  credentials: true
+}));
+
+// Health check endpoint (para Render)
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, timestamp: new Date().toISOString() });
+});
 
 // 2. Logging HTTP: Morgan imprime cada peticion en consola
 app.use(morgan('dev'));
@@ -25,9 +35,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // 4. Limite de peticiones: evita abuso/fuerza bruta
+// En desarrollo: límite muy alto para permitir pruebas intensas
+const isDev = process.env.NODE_ENV !== 'production';
 const generalLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
-  max: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
+  max: isDev ? 10000 : parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
   standardHeaders: true,
   legacyHeaders: false,
   message: { ok: false, msg: 'Demasiadas peticiones, intenta mas tarde' },

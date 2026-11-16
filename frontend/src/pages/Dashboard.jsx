@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { getPerfil, updatePerfil } from '../services/auth';
 
 export default function Dashboard() {
-  const { user, setUser, logout } = useAuth();
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState({ favoritos: 0, historial: 0, km: 0 });
   const [loading, setLoading] = useState(true);
@@ -14,9 +14,9 @@ export default function Dashboard() {
       getPerfil(user.id)
         .then((res) => {
           setStats({
-            favoritos: res.data?.favoritos?.length || 0,
-            historial: res.data?.historial?.length || 0,
-            km: res.data?.data?.km_recorridos || 0
+            favoritos: res.favoritos?.length || 0,
+            historial: res.historial?.length || 0,
+            km: res.km_recorridos || 0
           });
         })
         .finally(() => setLoading(false));
@@ -41,7 +41,6 @@ export default function Dashboard() {
             </p>
           </div>
         </div>
-        <button onClick={logout} className="btn btn-ghost">Salir</button>
       </header>
 
       <nav className="dashboard-nav">

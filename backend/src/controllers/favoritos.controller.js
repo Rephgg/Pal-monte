@@ -29,10 +29,10 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// POST /api/favoritos?usuario_id=&ruta_id=
+// POST /api/favoritos
 const add = async (req, res) => {
   try {
-    const { usuario_id, ruta_id } = req.query;
+    const { usuario_id, ruta_id } = req.body;
 
     if (!usuario_id || !ruta_id) {
       return res.status(400).json({ ok: false, msg: 'usuario_id y ruta_id son requeridos' });
@@ -48,10 +48,10 @@ const add = async (req, res) => {
   }
 };
 
-// DELETE /api/favoritos?usuario_id=&ruta_id=
+// DELETE /api/favoritos
 const remove = async (req, res) => {
   try {
-    const { usuario_id, ruta_id } = req.query;
+    const { usuario_id, ruta_id } = req.body;
 
     if (!usuario_id || !ruta_id) {
       return res.status(400).json({ ok: false, msg: 'usuario_id y ruta_id son requeridos' });
