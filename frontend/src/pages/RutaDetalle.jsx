@@ -184,7 +184,7 @@ export default function RutaDetalle() {
         <div className="ruta-detalle-header">
           <div className="ruta-detalle-image">
             {ruta.imagen ? (
-              <img src={ruta.imagen} alt={ruta.nombre} />
+              <img src={ruta.imagen} alt={ruta.nombre} onError={(e) => { e.target.style.display = 'none'; }} />
             ) : (
               <span className="ruta-card-placeholder">🚴</span>
             )}

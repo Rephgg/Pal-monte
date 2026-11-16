@@ -58,7 +58,7 @@ export default function Rutas() {
             <article key={ruta.id} className="ruta-card">
               <div className="ruta-card-image">
                 {ruta.imagen ? (
-                  <img src={ruta.imagen} alt={ruta.nombre} />
+                  <img src={ruta.imagen} alt={ruta.nombre} onError={(e) => { e.target.style.display = 'none'; }} />
                 ) : (
                   <span className="ruta-card-placeholder">🚴</span>
                 )}

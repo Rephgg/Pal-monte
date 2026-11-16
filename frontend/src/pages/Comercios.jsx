@@ -59,7 +59,7 @@ export default function Comercios() {
             <article key={c.id} className="comercio-card">
               <div className="comercio-card-image">
                 {c.foto ? (
-                  <img src={c.foto} alt={c.nombre} />
+                  <img src={c.foto} alt={c.nombre} onError={(e) => { e.target.style.display = 'none'; }} />
                 ) : (
                   <span className="ruta-card-placeholder">🏪</span>
                 )}
