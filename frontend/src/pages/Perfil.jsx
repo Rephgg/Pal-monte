@@ -8,7 +8,7 @@ export default function Perfil() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Formulario info personal
+  
   const [formInfo, setFormInfo] = useState({
     nombre: '',
     email: '',
@@ -16,14 +16,14 @@ export default function Perfil() {
     nivel: 'principiante'
   });
 
-  // Formulario contraseña
+  
   const [formPass, setFormPass] = useState({
     password_actual: '',
     password_nueva: '',
     password_confirm: ''
   });
 
-  // Cargar datos del perfil
+  
   useEffect(() => {
     if (user?.id) {
       getPerfil(user.id).then((data) => {

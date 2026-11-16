@@ -1,14 +1,6 @@
-/**
- * ==============================================
- * MIEMBRO 3 — PARTE 3: RUTAS REALIZADAS (Historial)
- * Endpoints:
- *  - GET    /api/rutas-realizadas?usuario_id=
- *  - POST   /api/rutas-realizadas?usuario_id=&ruta_id=&tiempo_real=&observaciones=
- * ==============================================
- */
+
 const pool = require('../config/db');
 
-// GET /api/rutas-realizadas?usuario_id=
 const getByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -29,7 +21,6 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// POST /api/rutas-realizadas
 const create = async (req, res) => {
   try {
     const { usuario_id, ruta_id, tiempo_real, observaciones = null } = req.body;

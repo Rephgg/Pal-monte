@@ -1,29 +1,7 @@
-/**
- * ==============================================
- * SOCIAL — SEGUIDORES, PUBLICACIONES, COMENTARIOS Y ME GUSTA
- * Endpoints:
- *  - POST   /api/seguidores
- *  - DELETE /api/seguidores?seguidor_id=&seguido_id=
- *  - GET    /api/seguidores?usuario_id=&tipo=seguidos|seguidores
- *  - GET    /api/publicaciones
- *  - GET    /api/publicaciones/usuario?usuario_id=
- *  - GET    /api/publicaciones/:publicacion_id
- *  - POST   /api/publicaciones
- *  - DELETE /api/publicaciones/:publicacion_id
- *  - GET    /api/publicaciones/:publicacion_id/comentarios
- *  - POST   /api/comentarios
- *  - DELETE /api/comentarios/:comentario_id
- *  - POST   /api/publicaciones/:publicacion_id/me-gusta
- *  - DELETE /api/publicaciones/:publicacion_id/me-gusta?usuario_id=
- *  - GET    /api/publicaciones/:publicacion_id/me-gusta
- * ==============================================
- */
+
 const social = require('../models/social.model');
 const notificaciones = require('../models/notificaciones.model');
 
-/* ---------------- SEGUIDORES ---------------- */
-
-// POST /api/seguidores
 const seguir = async (req, res) => {
   try {
     const { id_seguidor, id_seguido } = req.body || {};
@@ -50,7 +28,6 @@ const seguir = async (req, res) => {
   }
 };
 
-// DELETE /api/seguidores?seguidor_id=&seguido_id=
 const dejarDeSeguir = async (req, res) => {
   try {
     const { seguidor_id, seguido_id } = req.query;
@@ -67,7 +44,6 @@ const dejarDeSeguir = async (req, res) => {
   }
 };
 
-// GET /api/seguidores?usuario_id=&tipo=
 const getSeguidores = async (req, res) => {
   try {
     const { usuario_id, tipo = 'seguidos' } = req.query;
@@ -83,9 +59,6 @@ const getSeguidores = async (req, res) => {
   }
 };
 
-/* ---------------- PUBLICACIONES ---------------- */
-
-// GET /api/publicaciones (feed) | GET /api/publicaciones/usuario?usuario_id=
 const getPublicaciones = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -96,7 +69,6 @@ const getPublicaciones = async (req, res) => {
   }
 };
 
-// GET /api/publicaciones/:publicacion_id
 const getPublicacionById = async (req, res) => {
   try {
     const { publicacion_id } = req.params;
@@ -111,7 +83,6 @@ const getPublicacionById = async (req, res) => {
   }
 };
 
-// POST /api/publicaciones
 const createPublicacion = async (req, res) => {
   try {
     const { id_usuario, texto, imagen } = req.body || {};
@@ -126,7 +97,6 @@ const createPublicacion = async (req, res) => {
   }
 };
 
-// DELETE /api/publicaciones/:publicacion_id
 const removePublicacion = async (req, res) => {
   try {
     const { publicacion_id } = req.params;
@@ -139,9 +109,6 @@ const removePublicacion = async (req, res) => {
   }
 };
 
-/* ---------------- COMENTARIOS ---------------- */
-
-// GET /api/publicaciones/:publicacion_id/comentarios
 const getComentarios = async (req, res) => {
   try {
     const { publicacion_id } = req.params;
@@ -152,7 +119,6 @@ const getComentarios = async (req, res) => {
   }
 };
 
-// POST /api/comentarios
 const addComentario = async (req, res) => {
   try {
     const { id_publicacion, id_usuario, texto } = req.body || {};
@@ -178,7 +144,6 @@ const addComentario = async (req, res) => {
   }
 };
 
-// DELETE /api/comentarios/:comentario_id
 const removeComentario = async (req, res) => {
   try {
     const { comentario_id } = req.params;
@@ -191,9 +156,6 @@ const removeComentario = async (req, res) => {
   }
 };
 
-/* ---------------- ME GUSTA ---------------- */
-
-// POST /api/publicaciones/:publicacion_id/me-gusta
 const darMeGusta = async (req, res) => {
   try {
     const { publicacion_id } = req.params;
@@ -221,7 +183,6 @@ const darMeGusta = async (req, res) => {
   }
 };
 
-// DELETE /api/publicaciones/:publicacion_id/me-gusta?usuario_id=
 const quitarMeGusta = async (req, res) => {
   try {
     const { publicacion_id } = req.params;
@@ -237,7 +198,6 @@ const quitarMeGusta = async (req, res) => {
   }
 };
 
-// GET /api/publicaciones/:publicacion_id/me-gusta
 const getMeGusta = async (req, res) => {
   try {
     const { publicacion_id } = req.params;

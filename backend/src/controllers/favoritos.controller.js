@@ -1,15 +1,6 @@
-/**
- * ==============================================
- * MIEMBRO 3 — PARTE 1: FAVORITOS
- * Endpoints:
- *  - GET    /api/favoritos?usuario_id=
- *  - POST   /api/favoritos?usuario_id=&ruta_id=
- *  - DELETE /api/favoritos?usuario_id=&ruta_id=
- * ==============================================
- */
+
 const pool = require('../config/db');
 
-// GET /api/favoritos?usuario_id=
 const getByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -29,7 +20,6 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// POST /api/favoritos
 const add = async (req, res) => {
   try {
     const { usuario_id, ruta_id } = req.body;
@@ -48,7 +38,6 @@ const add = async (req, res) => {
   }
 };
 
-// DELETE /api/favoritos
 const remove = async (req, res) => {
   try {
     const { usuario_id, ruta_id } = req.body;

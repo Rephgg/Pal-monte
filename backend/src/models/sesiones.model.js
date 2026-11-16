@@ -1,7 +1,4 @@
-/**
- * Model SESIONES (tabla `sesion`)
- * Sesiones y tokens de autenticación por usuario.
- */
+
 const pool = require('../config/db');
 
 const create = async ({ id_usuario, token, expira }) => {

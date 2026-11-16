@@ -1,21 +1,6 @@
-/**
- * ==============================================
- * GEOMETRÍA DE RUTAS (puntos de la traza + paradas)
- * Endpoints:
- *  - GET    /api/rutas/:ruta_id/puntos
- *  - POST   /api/rutas/:ruta_id/puntos
- *  - PUT    /api/puntos-ruta/:punto_id
- *  - DELETE /api/puntos-ruta/:punto_id
- *  - GET    /api/rutas/:ruta_id/paradas
- *  - POST   /api/rutas/:ruta_id/paradas
- *  - DELETE /api/paradas-ruta/:parada_id
- * ==============================================
- */
+
 const geometria = require('../models/rutasGeometria.model');
 
-/* ---------------- PUNTOS DE LA TRAZA ---------------- */
-
-// GET /api/rutas/:ruta_id/puntos
 const getPuntos = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -26,7 +11,6 @@ const getPuntos = async (req, res) => {
   }
 };
 
-// POST /api/rutas/:ruta_id/puntos
 const addPunto = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -43,7 +27,6 @@ const addPunto = async (req, res) => {
   }
 };
 
-// PUT /api/puntos-ruta/:punto_id
 const updatePunto = async (req, res) => {
   try {
     const { punto_id } = req.params;
@@ -56,7 +39,6 @@ const updatePunto = async (req, res) => {
   }
 };
 
-// DELETE /api/puntos-ruta/:punto_id
 const removePunto = async (req, res) => {
   try {
     const { punto_id } = req.params;
@@ -69,9 +51,6 @@ const removePunto = async (req, res) => {
   }
 };
 
-/* ---------------- PARADAS / PUNTOS DE INTERÉS ---------------- */
-
-// GET /api/rutas/:ruta_id/paradas
 const getParadas = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -82,7 +61,6 @@ const getParadas = async (req, res) => {
   }
 };
 
-// POST /api/rutas/:ruta_id/paradas
 const addParada = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -97,7 +75,6 @@ const addParada = async (req, res) => {
   }
 };
 
-// DELETE /api/paradas-ruta/:parada_id
 const removeParada = async (req, res) => {
   try {
     const { parada_id } = req.params;

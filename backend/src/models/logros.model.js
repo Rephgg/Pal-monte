@@ -1,10 +1,5 @@
-/**
- * Model LOGROS (tablas `logro` y `logro_usuario`)
- * Catálogo de logros y logros desbloqueados por cada usuario.
- */
-const pool = require('../config/db');
 
-/* ---------------- CATÁLOGO DE LOGROS ---------------- */
+const pool = require('../config/db');
 
 const getAll = async () => {
   const [rows] = await pool.query('SELECT * FROM logro ORDER BY id');
@@ -42,8 +37,6 @@ const remove = async (id) => {
   const [result] = await pool.query('DELETE FROM logro WHERE id = ?', [id]);
   return result.affectedRows;
 };
-
-/* ---------------- LOGROS DEL USUARIO ---------------- */
 
 const logrosByUsuario = async (id_usuario) => {
   const [rows] = await pool.query(

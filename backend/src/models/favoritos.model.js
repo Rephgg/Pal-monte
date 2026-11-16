@@ -1,9 +1,5 @@
-/**
- * Model FAVORITOS (tabla `favorito`, PK compuesta id_usuario + id_ruta)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const getByUsuario = async (usuario_id) => {
   const [rows] = await pool.query(
@@ -20,7 +16,7 @@ const add = async (usuario_id, ruta_id) => {
     'INSERT INTO favorito (id_usuario, id_ruta) VALUES (?, ?)',
     [usuario_id, ruta_id]
   );
-  return result.affectedRows; // 1 si se insertó
+  return result.affectedRows; 
 };
 
 const remove = async (usuario_id, ruta_id) => {

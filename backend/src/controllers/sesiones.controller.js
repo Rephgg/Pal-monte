@@ -1,19 +1,9 @@
-/**
- * ==============================================
- * SESIONES — AUTENTICACIÓN
- * Endpoints:
- *  - POST   /api/sesiones
- *  - GET    /api/sesiones?usuario_id=
- *  - GET    /api/sesiones/validar?token=
- *  - DELETE /api/sesiones/cerrar?token=
- * ==============================================
- */
+
 const crypto = require('crypto');
 const sesiones = require('../models/sesiones.model');
 
 const HORAS_EXPIRACION = 8;
 
-// POST /api/sesiones
 const create = async (req, res) => {
   try {
     const { id_usuario } = req.body || {};
@@ -29,7 +19,6 @@ const create = async (req, res) => {
   }
 };
 
-// GET /api/sesiones?usuario_id=
 const getByUsuario = async (req, res) => {
   try {
     const { usuario_id } = req.query;
@@ -42,7 +31,6 @@ const getByUsuario = async (req, res) => {
   }
 };
 
-// GET /api/sesiones/validar?token=
 const validar = async (req, res) => {
   try {
     const { token } = req.query;
@@ -62,7 +50,6 @@ const validar = async (req, res) => {
   }
 };
 
-// DELETE /api/sesiones/cerrar?token=
 const cerrar = async (req, res) => {
   try {
     const { token } = req.query;

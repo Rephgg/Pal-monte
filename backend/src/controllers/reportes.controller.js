@@ -1,16 +1,6 @@
-/**
- * ==============================================
- * REPORTES (moderación)
- * Endpoints:
- *  - GET    /api/reportes?estado=
- *  - POST   /api/reportes
- *  - PUT    /api/reportes/:reporte_id/estado
- *  - DELETE /api/reportes/:reporte_id
- * ==============================================
- */
+
 const reportes = require('../models/reportes.model');
 
-// GET /api/reportes?estado=
 const getAll = async (req, res) => {
   try {
     const { estado } = req.query;
@@ -21,7 +11,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// POST /api/reportes
 const create = async (req, res) => {
   try {
     const { id_usuario_reporta, tipo, id_referencia, motivo } = req.body || {};
@@ -36,7 +25,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/reportes/:reporte_id/estado
 const cambiarEstado = async (req, res) => {
   try {
     const { reporte_id } = req.params;
@@ -52,7 +40,6 @@ const cambiarEstado = async (req, res) => {
   }
 };
 
-// DELETE /api/reportes/:reporte_id
 const remove = async (req, res) => {
   try {
     const { reporte_id } = req.params;

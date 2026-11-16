@@ -1,9 +1,5 @@
-/**
- * Model COMERCIOS (tabla `comercio`)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const COLUMNS = `id, nombre, tipo, direccion, coordenadas, telefono, horario, foto, calificacion`;
 
@@ -21,7 +17,7 @@ const getAll = async (tipo) => {
 
 const getById = async (id) => {
   const [rows] = await pool.query(`SELECT ${COLUMNS}, verificado FROM comercio WHERE id = ?`, [id]);
-  return rows[0]; // undefined si no existe
+  return rows[0]; 
 };
 
 const getResenasByComercio = async (comercio_id) => {

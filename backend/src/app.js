@@ -10,32 +10,20 @@ const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 const app = express();
 app.set('trust proxy', 1);
 
-// =====================================================
-// MIDDLEWARES GLOBALES
-// Se ejecutan en cada peticion, en este orden, antes
-// de llegar a cualquier ruta.
-// =====================================================
-
-// 1. CORS: permite que el frontend consuma la API (origen dinámico desde FRONTEND_URL)
 const allowedOrigin = process.env.FRONTEND_URL;
 app.use(cors({
   origin: allowedOrigin,
   credentials: true
 }));
 
-// Health check endpoint (para Render)
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, timestamp: new Date().toISOString() });
 });
 
-// 2. Logging HTTP: Morgan imprime cada peticion en consola
 app.use(morgan('dev'));
 
-// 3. Parsear body JSON
 app.use(express.json());
 
-// 4. Limite de peticiones: evita abuso/fuerza bruta
-// En desarrollo: límite muy alto para permitir pruebas intensas
 const isDev = process.env.NODE_ENV !== 'production';
 const generalLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
@@ -46,21 +34,11 @@ const generalLimiter = rateLimit({
 });
 app.use('/api', generalLimiter);
 
-// 5. Middleware personalizado global: log con fecha y metodo
 app.use(loggerMiddleware);
 
-// =====================================================
-// CABLEADO DE RUTAS
-// Cada miembro del equipo crea su módulo de rutas y lo
-// registra aquí. Consulta src/PLAN_DIVISION.md para ver
-// qué parte corresponde a cada uno.
-// =====================================================
-
-// Miembro 1: Usuarios, Perfil y Autenticación
 const usuariosRouter = require('./routes/usuarios.routes');
 app.use('/api', usuariosRouter);
 
-// Miembro 2: Rutas, Comercios y Eventos
 const rutasRouter = require('./routes/rutas.routes');
 app.use('/api', rutasRouter);
 const comerciosRouter = require('./routes/comercios.routes');
@@ -68,20 +46,12 @@ app.use('/api', comerciosRouter);
 const eventosRouter = require('./routes/eventos.routes');
 app.use('/api', eventosRouter);
 
-// Miembro 3: Favoritos, Reseñas y Rutas Realizadas
 const favoritosRouter = require('./routes/favoritos.routes');
 app.use('/api', favoritosRouter);
 const resenasRouter = require('./routes/resenas.routes');
 app.use('/api', resenasRouter);
 const realizadasRouter = require('./routes/rutasRealizadas.routes');
 app.use('/api', realizadasRouter);
-
-// =====================================================
-// MÓDULOS NUEVOS (ampliación de la base de datos)
-// Sesiones y autenticación, bicicletas, geometría de
-// rutas, comunidad, notificaciones, logros,
-// patrocinadores, moderación y horarios comerciales.
-// =====================================================
 
 const sesionesRouter = require('./routes/sesiones.routes');
 app.use('/api', sesionesRouter);
@@ -102,11 +72,6 @@ app.use('/api', reportesRouter);
 const horariosComercioRouter = require('./routes/horariosComercio.routes');
 app.use('/api', horariosComercioRouter);
 
-// =====================================================
-// MIDDLEWARE DE ERRORES GLOBAL
-// Va al final: primero 404 para rutas inexistentes,
-// luego el manejador de errores (4 parametros).
-// =====================================================
 app.use(notFound);
 app.use(errorHandler);
 

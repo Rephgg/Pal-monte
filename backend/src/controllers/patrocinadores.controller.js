@@ -1,19 +1,6 @@
-/**
- * ==============================================
- * PATROCINADORES
- * Endpoints:
- *  - GET    /api/patrocinadores
- *  - POST   /api/admin/patrocinadores
- *  - PUT    /api/admin/patrocinadores/:patrocinador_id
- *  - DELETE /api/admin/patrocinadores/:patrocinador_id
- *  - GET    /api/eventos/:evento_id/patrocinadores
- *  - POST   /api/eventos/:evento_id/patrocinadores
- *  - DELETE /api/eventos/:evento_id/patrocinadores?patrocinador_id=
- * ==============================================
- */
+
 const patrocinadores = require('../models/patrocinadores.model');
 
-// GET /api/patrocinadores
 const getAll = async (req, res) => {
   try {
     const rows = await patrocinadores.getAll();
@@ -23,7 +10,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// POST /api/admin/patrocinadores
 const create = async (req, res) => {
   try {
     const { nombre, descripcion = null, logo, web = null } = req.body || {};
@@ -36,7 +22,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/admin/patrocinadores/:patrocinador_id
 const update = async (req, res) => {
   try {
     const { patrocinador_id } = req.params;
@@ -49,7 +34,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/patrocinadores/:patrocinador_id
 const remove = async (req, res) => {
   try {
     const { patrocinador_id } = req.params;
@@ -62,9 +46,6 @@ const remove = async (req, res) => {
   }
 };
 
-/* ---------------- VINCULACIÓN CON EVENTOS ---------------- */
-
-// GET /api/eventos/:evento_id/patrocinadores
 const getByEvento = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -75,7 +56,6 @@ const getByEvento = async (req, res) => {
   }
 };
 
-// POST /api/eventos/:evento_id/patrocinadores
 const vincular = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -92,7 +72,6 @@ const vincular = async (req, res) => {
   }
 };
 
-// DELETE /api/eventos/:evento_id/patrocinadores?patrocinador_id=
 const desvincular = async (req, res) => {
   try {
     const { evento_id } = req.params;

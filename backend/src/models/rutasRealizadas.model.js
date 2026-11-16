@@ -1,9 +1,5 @@
-/**
- * Model RUTAS REALIZADAS (tabla `ruta_realizada`, PK id_usuario + id_ruta + fecha)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const getByUsuario = async (usuario_id) => {
   const [rows] = await pool.query(

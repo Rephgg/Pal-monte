@@ -1,17 +1,6 @@
-/**
- * ==============================================
- * HORARIOS DE COMERCIO
- * Endpoints:
- *  - GET    /api/comercios/:comercio_id/horarios
- *  - POST   /api/comercios/:comercio_id/horarios
- *  - PUT    /api/horarios/:horario_id
- *  - DELETE /api/horarios/:horario_id
- * Nota: dia_semana 1=Lunes ... 7=Domingo.
- * ==============================================
- */
+
 const horarios = require('../models/horariosComercio.model');
 
-// GET /api/comercios/:comercio_id/horarios
 const getByComercio = async (req, res) => {
   try {
     const { comercio_id } = req.params;
@@ -22,7 +11,6 @@ const getByComercio = async (req, res) => {
   }
 };
 
-// POST /api/comercios/:comercio_id/horarios
 const create = async (req, res) => {
   try {
     const { comercio_id } = req.params;
@@ -39,7 +27,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/horarios/:horario_id
 const update = async (req, res) => {
   try {
     const { horario_id } = req.params;
@@ -52,7 +39,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/horarios/:horario_id
 const remove = async (req, res) => {
   try {
     const { horario_id } = req.params;

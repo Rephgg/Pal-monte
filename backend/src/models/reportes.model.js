@@ -1,7 +1,4 @@
-/**
- * Model REPORTES (tabla `reporte`)
- * Moderación: reportes de usuarios y contenido por parte de la comunidad.
- */
+
 const pool = require('../config/db');
 
 const getAll = async (estado = null) => {

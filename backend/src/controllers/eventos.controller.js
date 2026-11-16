@@ -1,23 +1,6 @@
-/**
- * ==============================================
- * MIEMBRO 2 — PARTE 3: EVENTOS
- * Endpoints:
- *  - GET    /api/eventos
- *  - GET    /api/eventos/:evento_id
- *  - POST   /api/eventos?organizador_id=
- *  - POST   /api/eventos/:evento_id/inscribir
- *  - DELETE /api/eventos/:evento_id/cancelar-inscripcion
- *  - PUT    /api/eventos/:evento_id/cancelar
- *  - PUT    /api/eventos/:evento_id/confirmar
- *  - PUT    /api/eventos/:evento_id/asistio
- *  - GET    /api/admin/eventos
- *  - PUT    /api/admin/eventos/:evento_id
- *  - DELETE /api/admin/eventos/:evento_id
- * ==============================================
- */
+
 const pool = require('../config/db');
 
-// GET /api/eventos
 const getAll = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -30,7 +13,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// GET /api/eventos/:evento_id
 const getById = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -59,7 +41,6 @@ const getById = async (req, res) => {
   }
 };
 
-// POST /api/eventos?organizador_id=
 const create = async (req, res) => {
   try {
     const { organizador_id } = req.query;
@@ -84,7 +65,6 @@ const create = async (req, res) => {
   }
 };
 
-// POST /api/eventos/:evento_id/inscribir
 const inscribir = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -111,7 +91,6 @@ const inscribir = async (req, res) => {
   }
 };
 
-// DELETE /api/eventos/:evento_id/cancelar-inscripcion
 const cancelarInscripcion = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -131,7 +110,6 @@ const cancelarInscripcion = async (req, res) => {
   }
 };
 
-// PUT /api/eventos/:evento_id/cancelar
 const cancelarEvento = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -142,7 +120,6 @@ const cancelarEvento = async (req, res) => {
   }
 };
 
-// PUT /api/eventos/:evento_id/confirmar
 const confirmar = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -160,7 +137,6 @@ const confirmar = async (req, res) => {
   }
 };
 
-// PUT /api/eventos/:evento_id/asistio
 const asistio = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -178,7 +154,6 @@ const asistio = async (req, res) => {
   }
 };
 
-// GET /api/admin/eventos
 const getAllAdmin = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -193,7 +168,6 @@ const getAllAdmin = async (req, res) => {
   }
 };
 
-// PUT /api/admin/eventos/:evento_id
 const update = async (req, res) => {
   try {
     const { evento_id } = req.params;
@@ -213,7 +187,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/eventos/:evento_id
 const remove = async (req, res) => {
   try {
     const { evento_id } = req.params;

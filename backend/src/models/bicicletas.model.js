@@ -1,7 +1,4 @@
-/**
- * Model BICICLETAS (tabla `bicicleta`)
- * Bicicletas que registra cada usuario.
- */
+
 const pool = require('../config/db');
 
 const getByUsuario = async (id_usuario) => {

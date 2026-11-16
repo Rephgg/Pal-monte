@@ -1,10 +1,5 @@
-/**
- * Model GEOMETRÍA DE RUTAS (tablas `punto_ruta` y `parada_ruta`)
- * Traza del recorrido (waypoints) y puntos de interés de cada ruta.
- */
-const pool = require('../config/db');
 
-/* ---------------- PUNTOS DE LA TRAZA ---------------- */
+const pool = require('../config/db');
 
 const puntosByRuta = async (id_ruta) => {
   const [rows] = await pool.query(
@@ -39,8 +34,6 @@ const removePunto = async (id) => {
   const [result] = await pool.query('DELETE FROM punto_ruta WHERE id = ?', [id]);
   return result.affectedRows;
 };
-
-/* ---------------- PARADAS / PUNTOS DE INTERÉS ---------------- */
 
 const paradasByRuta = async (id_ruta) => {
   const [rows] = await pool.query(

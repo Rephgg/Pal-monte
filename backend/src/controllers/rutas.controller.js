@@ -1,20 +1,9 @@
-/**
- * ==============================================
- * MIEMBRO 2 — PARTE 1: RUTAS
- * Endpoints:
- *  - GET    /api/rutas (?dificultad=)
- *  - GET    /api/rutas/:ruta_id
- *  - POST   /api/admin/rutas
- *  - PUT    /api/admin/rutas/:ruta_id
- *  - DELETE /api/admin/rutas/:ruta_id
- * ==============================================
- */
+
 const pool = require('../config/db');
 
 const COLUMNS = `id, nombre, descripcion, distancia_km, dificultad, tipo_bici,
                  tiempo_estimado, coordenadas, zona, elevacion, superficie, imagen`;
 
-// GET /api/rutas
 const getAll = async (req, res) => {
   try {
     const { dificultad } = req.query;
@@ -35,7 +24,6 @@ const getAll = async (req, res) => {
   }
 };
 
-// GET /api/rutas/:ruta_id
 const getById = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -63,7 +51,6 @@ const getById = async (req, res) => {
   }
 };
 
-// POST /api/admin/rutas
 const create = async (req, res) => {
   try {
     const { nombre, descripcion, distancia_km, dificultad, tipo_bici, tiempo_estimado, coordenadas, zona, elevacion, superficie = 'mixta' } = req.body || {};
@@ -84,7 +71,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/admin/rutas/:ruta_id
 const update = async (req, res) => {
   try {
     const { ruta_id } = req.params;
@@ -107,7 +93,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/admin/rutas/:ruta_id
 const remove = async (req, res) => {
   try {
     const { ruta_id } = req.params;

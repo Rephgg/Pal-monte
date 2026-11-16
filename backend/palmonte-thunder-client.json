@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "PalMonte API (backend)",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https:
   },
   "item": [
     {
@@ -12,7 +12,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas"
+              "raw": "http:
             }
           }
         },
@@ -21,7 +21,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas?dificultad=media"
+              "raw": "http:
             }
           }
         },
@@ -30,7 +30,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas/1"
+              "raw": "http:
             }
           }
         },
@@ -39,7 +39,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/comercios"
+              "raw": "http:
             }
           }
         },
@@ -48,7 +48,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/comercios?tipo=cafe"
+              "raw": "http:
             }
           }
         },
@@ -57,7 +57,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/comercios/1"
+              "raw": "http:
             }
           }
         },
@@ -66,7 +66,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/comercios/1/horarios"
+              "raw": "http:
             }
           }
         },
@@ -75,7 +75,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/eventos"
+              "raw": "http:
             }
           }
         },
@@ -84,7 +84,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/eventos/1"
+              "raw": "http:
             }
           }
         },
@@ -93,7 +93,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/logros"
+              "raw": "http:
             }
           }
         },
@@ -102,7 +102,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/patrocinadores"
+              "raw": "http:
             }
           }
         },
@@ -111,7 +111,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas/1/puntos"
+              "raw": "http:
             }
           }
         },
@@ -120,7 +120,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas/1/paradas"
+              "raw": "http:
             }
           }
         }
@@ -134,7 +134,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/registro"
+              "raw": "http:
             },
             "header": [
               {
@@ -158,7 +158,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/login"
+              "raw": "http:
             },
             "header": [
               {
@@ -187,7 +187,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/perfil/5"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -206,7 +206,7 @@
           "request": {
             "method": "PUT",
             "url": {
-              "raw": "http://localhost:3000/api/api/perfil/5"
+              "raw": "http:
             },
             "header": [
               {
@@ -240,7 +240,7 @@
           "request": {
             "method": "PUT",
             "url": {
-              "raw": "http://localhost:3000/api/api/perfil/5/password"
+              "raw": "http:
             },
             "header": [
               {
@@ -274,7 +274,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -293,7 +293,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5&ruta_id=1"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -312,7 +312,7 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "http://localhost:3000/api/api/favoritos?usuario_id=5&ruta_id=1"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -331,7 +331,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas-realizadas?usuario_id=5"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -350,7 +350,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/rutas-realizadas?usuario_id=5&ruta_id=1&tiempo_real=50&observaciones=prueba"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -369,7 +369,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/resenas"
+              "raw": "http:
             },
             "header": [
               {
@@ -403,7 +403,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/eventos/1/inscribir"
+              "raw": "http:
             },
             "header": [
               {
@@ -442,7 +442,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/usuarios"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -461,7 +461,7 @@
           "request": {
             "method": "PUT",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/usuarios/1/rol"
+              "raw": "http:
             },
             "header": [
               {
@@ -495,7 +495,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/eventos"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -514,7 +514,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/rutas"
+              "raw": "http:
             },
             "header": [
               {
@@ -548,7 +548,7 @@
           "request": {
             "method": "PUT",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/rutas/1"
+              "raw": "http:
             },
             "header": [
               {
@@ -582,7 +582,7 @@
           "request": {
             "method": "DELETE",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/rutas/1"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",
@@ -601,7 +601,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/comercios"
+              "raw": "http:
             },
             "header": [
               {
@@ -635,7 +635,7 @@
           "request": {
             "method": "POST",
             "url": {
-              "raw": "http://localhost:3000/api/api/admin/logros"
+              "raw": "http:
             },
             "header": [
               {
@@ -674,7 +674,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/perfil/5"
+              "raw": "http:
             }
           }
         },
@@ -683,7 +683,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "http://localhost:3000/api/api/perfil/5"
+              "raw": "http:
             },
             "auth": {
               "type": "bearer",

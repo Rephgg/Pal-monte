@@ -1,12 +1,4 @@
-/**
- * ==============================================
- * MIEMBRO 3 — PARTE 2: RESEÑAS
- * Endpoints:
- *  - POST   /api/resenas
- *  - PUT    /api/resenas/:resena_id
- *  - DELETE /api/resenas/:resena_id
- * ==============================================
- */
+
 const pool = require('../config/db');
 
 const syncComercioCalificacion = async (id_comercio) => {
@@ -14,7 +6,6 @@ const syncComercioCalificacion = async (id_comercio) => {
   await pool.query('UPDATE comercio SET calificacion = ? WHERE id = ?', [prom[0].promedio || 0, id_comercio]);
 };
 
-// POST /api/resenas
 const create = async (req, res) => {
   try {
     const { id_usuario, id_ruta, id_comercio, calificacion, comentario } = req.body || {};
@@ -47,7 +38,6 @@ const create = async (req, res) => {
   }
 };
 
-// PUT /api/resenas/:resena_id
 const update = async (req, res) => {
   try {
     const { resena_id } = req.params;
@@ -72,7 +62,6 @@ const update = async (req, res) => {
   }
 };
 
-// DELETE /api/resenas/:resena_id
 const remove = async (req, res) => {
   try {
     const { resena_id } = req.params;

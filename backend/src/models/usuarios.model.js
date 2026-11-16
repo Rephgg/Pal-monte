@@ -1,13 +1,9 @@
-/**
- * Model USUARIOS + PERFIL (tablas `usuario` y `perfil`)
- * Mismo patrón que tu ejemplo productos: ? placeholders, devuelve datos.
- */
+
 const pool = require('../config/db');
-// ? = placeholder seguro (evita SQL Injection)
 
 const findByEmail = async (email) => {
   const [rows] = await pool.query('SELECT id FROM usuario WHERE email = ?', [email]);
-  return rows[0]; // undefined si no existe
+  return rows[0]; 
 };
 
 const findById = async (id) => {
