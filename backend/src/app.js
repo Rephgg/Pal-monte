@@ -8,6 +8,7 @@ const { loggerMiddleware } = require('./middlewares/loggerMiddleware');
 const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // =====================================================
 // MIDDLEWARES GLOBALES
