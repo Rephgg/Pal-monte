@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/api/:path*", "destination": "https://pal-monte.onrender.com/api/:path*" },
+    { "source": "/((?!api|_vercel|static|.*\\..*).*)", "destination": "/index.html" }
   ]
 }
